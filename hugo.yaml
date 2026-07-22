@@ -1,0 +1,56 @@
+baseURL: https://mikotohhh.github.io/
+locale: en-us
+title: Luozhong Zhou
+theme: PaperMod
+
+enableRobotsTXT: true
+enableEmoji: true
+
+outputs:
+  home:
+    - HTML
+    - RSS
+    - JSON # required for PaperMod search
+
+params:
+  env: production
+  author: Luozhong Zhou
+  description: "Luozhong Zhou — notes and experiments on machine learning research"
+  defaultTheme: auto
+  ShowReadingTime: true
+  ShowToc: true
+  ShowCodeCopyButtons: true
+  ShowBreadCrumbs: true
+  ShowPostNavLinks: true
+  ShowRssButtonInSectionTermList: true
+
+  homeInfoParams:
+    Title: "Luozhong Zhou"
+    Content: >
+      Machine learning researcher. I write about LLMs, interpretability,
+      and running experiments.
+
+  socialIcons:
+    - name: github
+      url: "https://github.com/mikotohhh"
+    - name: rss
+      url: "/index.xml"
+
+menu:
+  main:
+    - identifier: posts
+      name: Posts
+      url: /posts/
+      weight: 10
+    - identifier: tags
+      name: Tags
+      url: /tags/
+      weight: 20
+    - identifier: search
+      name: Search
+      url: /search/
+      weight: 30
+    - identifier: about
+      name: About
+      url: /about/
+      weight: 40
