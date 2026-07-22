@@ -1,0 +1,101 @@
+/* A compact, automatically numbered table of contents for long-form posts. */
+
+details.toc {
+    overflow: hidden;
+}
+
+details.toc summary {
+    padding: 0.8rem 1.1rem;
+}
+
+details.toc[open] summary {
+    border-bottom: 1px solid var(--border);
+}
+
+details.toc .title {
+    font-weight: 650;
+    letter-spacing: 0.01em;
+}
+
+details.toc .inner {
+    margin: 0;
+    padding: 0.9rem 1rem 1.05rem;
+    counter-reset: toc-section;
+}
+
+details.toc .inner ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+details.toc .inner > ul {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.25rem 1rem;
+}
+
+details.toc .inner > ul > li {
+    min-width: 0;
+    counter-increment: toc-section;
+}
+
+details.toc .inner > ul > li > a {
+    display: flex;
+    gap: 0.6rem;
+    align-items: baseline;
+    padding: 0.45rem 0.5rem;
+    border-radius: 6px;
+    line-height: 1.35;
+    text-decoration: none;
+}
+
+details.toc .inner > ul > li > a::before {
+    flex: 0 0 1.7rem;
+    content: counter(toc-section) ".";
+    color: var(--secondary);
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+}
+
+details.toc .inner > ul > li > a:hover,
+details.toc .inner > ul > li > ul a:hover {
+    background: var(--tertiary);
+}
+
+details.toc .inner > ul > li > ul {
+    margin: 0.05rem 0 0.35rem 2.8rem;
+    counter-reset: toc-subsection;
+}
+
+details.toc .inner > ul > li > ul > li {
+    counter-increment: toc-subsection;
+}
+
+details.toc .inner > ul > li > ul > li > a {
+    display: flex;
+    gap: 0.5rem;
+    padding: 0.3rem 0.45rem;
+    border-radius: 6px;
+    color: var(--secondary);
+    font-size: 0.92rem;
+    line-height: 1.35;
+    text-decoration: none;
+}
+
+details.toc .inner > ul > li > ul > li > a::before {
+    flex: 0 0 2.3rem;
+    content: counter(toc-section) "." counter(toc-subsection);
+    font-weight: 650;
+    font-variant-numeric: tabular-nums;
+}
+
+@media screen and (max-width: 700px) {
+    details.toc .inner > ul {
+        grid-template-columns: 1fr;
+    }
+
+    details.toc .inner {
+        padding-inline: 0.65rem;
+    }
+}
