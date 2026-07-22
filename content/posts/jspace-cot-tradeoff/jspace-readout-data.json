@@ -1,0 +1,1050 @@
+{
+  "schema": "jspace-blog-figure-data-v1",
+  "source_sha256": {
+    "operator_battery_results_v2.json": "36c30ce49e138257d7c2f2eb93e408a26a7d9377199eb50b12d8e3f8f805a1a2",
+    "targetability_calibration_results.json": "6fe3fb5d49f35bdfc7f74b260ca5e0f790ad8a942487f13e8a92eeaaf453f782",
+    "math_instrument_results_v2.json": "260925d0fc3cb4a04cd30e547c58a669e60f877837240a7755a92b67092f373a"
+  },
+  "panel_a_behavior": {
+    "selection_rule": "post-hoc display rule: lowest frozen item index with clean correct, jspace_paper_raw wrong, and all three matched_paper_raw controls correct",
+    "index": 11,
+    "item_key": "v3-operator-battery-v2:11:b37ec705bdbdd507c8be2a9f2d5f7c3a70aabf02c0762bb10c7c1fe9c69bb584",
+    "prompt": "Answer in as few words as possible. The capital of the country where Frida Kahlo was born is",
+    "gold_answers": [
+      "mexico city"
+    ],
+    "outputs": {
+      "clean": "Mexico City.",
+      "jspace_paper_raw": "Mexico.",
+      "matched_paper_raw_s0": "Mexico City.",
+      "matched_paper_raw_s1": "Mexico City.",
+      "matched_paper_raw_s2": "Mexico City."
+    },
+    "correct": {
+      "clean": true,
+      "jspace_paper_raw": false,
+      "matched_paper_raw_s0": true,
+      "matched_paper_raw_s1": true,
+      "matched_paper_raw_s2": true
+    },
+    "note": "The task-required chain in the figure is not a saved lens trace."
+  },
+  "panel_b_selector_trace": {
+    "schema": "blog-jspace-trace-diagnostic-v1",
+    "scope": "read-only reproduction of frozen rank metric; not a new behavioral test",
+    "model": "Qwen/Qwen3-4B",
+    "model_revision": "1cfa9a7208912126459214e8b04321603b3df60c",
+    "lens": "neuronpedia/jacobian-lens/qwen3-4b/jlens/Salesforce-wikitext/Qwen3-4B_jacobian_lens.pt",
+    "lens_revision": "a4114d7752d11eb546e6cf372213d7e75526d3a1",
+    "lens_sha256": "9c94a43ac2db2debbab36acb74480f49a3ac411fb3d7fa8e5461377028e74606",
+    "data_sha256": "50b7e4c9255291c0ca2a8e94615be9f44531fa57bb1a844e4f9616056d987416",
+    "frozen_result_sha256": "6fe3fb5d49f35bdfc7f74b260ca5e0f790ad8a942487f13e8a92eeaaf453f782",
+    "item_index": 14,
+    "name": "planet-3-moons",
+    "prompt": "Fact: The number of natural moons orbiting the planet third from the Sun is ",
+    "answer": "1",
+    "intermediate_concepts": [
+      "Earth"
+    ],
+    "clean_output": "1. \n\nQuestion: How many moons",
+    "clean_top10_ids": [
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24
+    ],
+    "target_token_ids": [
+      9237,
+      43824
+    ],
+    "post_exclusion_target_token_ids": [
+      9237,
+      43824
+    ],
+    "per_layer": {
+      "0": {
+        "target_rank": 1562,
+        "top10_ids": [
+          9902,
+          24984,
+          90155,
+          12022,
+          45320,
+          6762,
+          14512,
+          3355,
+          22746,
+          28038
+        ],
+        "top10_tokens": [
+          " ``",
+          " \\\\",
+          " \\\\\n",
+          " …\n\n",
+          " ''\n\n",
+          " .\n\n",
+          " :\n\n",
+          " ''",
+          " \"\n\n",
+          " )\n\n\n\n\n\n\n\n"
+        ]
+      },
+      "1": {
+        "target_rank": 5265,
+        "top10_ids": [
+          84500,
+          45320,
+          19799,
+          9902,
+          90155,
+          92327,
+          22746,
+          5468,
+          14512,
+          12022
+        ],
+        "top10_tokens": [
+          " $\n\n",
+          " ''\n\n",
+          " *\n\n",
+          " ``",
+          " \\\\\n",
+          "******\n\n",
+          " \"\n\n",
+          " ...\n\n",
+          " :\n\n",
+          " …\n\n"
+        ]
+      },
+      "2": {
+        "target_rank": 2257,
+        "top10_ids": [
+          12022,
+          89478,
+          5618,
+          12236,
+          4593,
+          16448,
+          1213,
+          17607,
+          10205,
+          5434
+        ],
+        "top10_tokens": [
+          " …\n\n",
+          "…\n",
+          "*\n",
+          " ...\n",
+          " …",
+          " .\n",
+          " *\n",
+          " ?\n",
+          " […",
+          "…\n\n"
+        ]
+      },
+      "3": {
+        "target_rank": 2926,
+        "top10_ids": [
+          89478,
+          1019,
+          5618,
+          33947,
+          8997,
+          3989,
+          88774,
+          25046,
+          13744,
+          48116
+        ],
+        "top10_tokens": [
+          "…\n",
+          "**\n",
+          "*\n",
+          "..\n",
+          "。\n",
+          "`\n",
+          "”\n",
+          "$\n",
+          "%\n",
+          ".”\n"
+        ]
+      },
+      "4": {
+        "target_rank": 7842,
+        "top10_ids": [
+          94432,
+          18639,
+          98362,
+          8997,
+          33947,
+          3989,
+          48846,
+          57909,
+          50380,
+          84780
+        ],
+        "top10_tokens": [
+          "？\n",
+          "`.\n",
+          "aviest",
+          "。\n",
+          "..\n",
+          "`\n",
+          "ucas",
+          "ighthouse",
+          "phas",
+          "niest"
+        ]
+      },
+      "5": {
+        "target_rank": 7561,
+        "top10_ids": [
+          3989,
+          94432,
+          8997,
+          18639,
+          36885,
+          26850,
+          1019,
+          8805,
+          19324,
+          48846
+        ],
+        "top10_tokens": [
+          "`\n",
+          "？\n",
+          "。\n",
+          "`.\n",
+          "结",
+          "？\n\n",
+          "**\n",
+          "\"`\n",
+          "`\n\n",
+          "ucas"
+        ]
+      },
+      "6": {
+        "target_rank": 3335,
+        "top10_ids": [
+          33947,
+          8997,
+          18639,
+          94432,
+          89478,
+          30438,
+          22956,
+          3989,
+          54538,
+          25046
+        ],
+        "top10_tokens": [
+          "..\n",
+          "。\n",
+          "`.\n",
+          "？\n",
+          "…\n",
+          "...\"\n",
+          "\".\n",
+          "`\n",
+          " ..\n",
+          "$\n"
+        ]
+      },
+      "7": {
+        "target_rank": 6128,
+        "top10_ids": [
+          8997,
+          94432,
+          33947,
+          18639,
+          54538,
+          59217,
+          26280,
+          9338,
+          624,
+          22956
+        ],
+        "top10_tokens": [
+          "。\n",
+          "？\n",
+          "..\n",
+          "`.\n",
+          " ..\n",
+          "；\n",
+          "|.\n",
+          "...\n",
+          ".\n",
+          "\".\n"
+        ]
+      },
+      "8": {
+        "target_rank": 3258,
+        "top10_ids": [
+          8997,
+          94432,
+          624,
+          9338,
+          12236,
+          33947,
+          59217,
+          22956,
+          54538,
+          16448
+        ],
+        "top10_tokens": [
+          "。\n",
+          "？\n",
+          ".\n",
+          "...\n",
+          " ...\n",
+          "..\n",
+          "；\n",
+          "\".\n",
+          " ..\n",
+          " .\n"
+        ]
+      },
+      "9": {
+        "target_rank": 2777,
+        "top10_ids": [
+          8997,
+          624,
+          94432,
+          59217,
+          16448,
+          22956,
+          33947,
+          89478,
+          18639,
+          11319
+        ],
+        "top10_tokens": [
+          "。\n",
+          ".\n",
+          "？\n",
+          "；\n",
+          " .\n",
+          "\".\n",
+          "..\n",
+          "…\n",
+          "`.\n",
+          "？"
+        ]
+      },
+      "10": {
+        "target_rank": 27,
+        "top10_ids": [
+          624,
+          8997,
+          89478,
+          33947,
+          94432,
+          16448,
+          54538,
+          9338,
+          4894,
+          22956
+        ],
+        "top10_tokens": [
+          ".\n",
+          "。\n",
+          "…\n",
+          "..\n",
+          "？\n",
+          " .\n",
+          " ..\n",
+          "...\n",
+          "!\n",
+          "\".\n"
+        ]
+      },
+      "11": {
+        "target_rank": 25,
+        "top10_ids": [
+          94432,
+          8997,
+          22956,
+          624,
+          5267,
+          10040,
+          47369,
+          4894,
+          24734,
+          89478
+        ],
+        "top10_tokens": [
+          "？\n",
+          "。\n",
+          "\".\n",
+          ".\n",
+          "?\n",
+          ".\"\n",
+          "?\"\n",
+          "!\n",
+          "!\"\n",
+          "…\n"
+        ]
+      },
+      "12": {
+        "target_rank": 129,
+        "top10_ids": [
+          89478,
+          624,
+          10040,
+          8997,
+          9338,
+          22956,
+          5267,
+          47369,
+          30438,
+          33947
+        ],
+        "top10_tokens": [
+          "…\n",
+          ".\n",
+          ".\"\n",
+          "。\n",
+          "...\n",
+          "\".\n",
+          "?\n",
+          "?\"\n",
+          "...\"\n",
+          "..\n"
+        ]
+      },
+      "13": {
+        "target_rank": 23,
+        "top10_ids": [
+          8997,
+          624,
+          10040,
+          94432,
+          22956,
+          89478,
+          47369,
+          5267,
+          24734,
+          4894
+        ],
+        "top10_tokens": [
+          "。\n",
+          ".\n",
+          ".\"\n",
+          "？\n",
+          "\".\n",
+          "…\n",
+          "?\"\n",
+          "?\n",
+          "!\"\n",
+          "!\n"
+        ]
+      },
+      "14": {
+        "target_rank": 132,
+        "top10_ids": [
+          8997,
+          94432,
+          47369,
+          22956,
+          624,
+          10040,
+          5267,
+          89478,
+          86427,
+          24734
+        ],
+        "top10_tokens": [
+          "。\n",
+          "？\n",
+          "?\"\n",
+          "\".\n",
+          ".\n",
+          ".\"\n",
+          "?\n",
+          "…\n",
+          ")?\n",
+          "!\"\n"
+        ]
+      },
+      "15": {
+        "target_rank": 110,
+        "top10_ids": [
+          94432,
+          8997,
+          102493,
+          47369,
+          5267,
+          105339,
+          86427,
+          117454,
+          11319,
+          24734
+        ],
+        "top10_tokens": [
+          "？\n",
+          "。\n",
+          "地球",
+          "?\"\n",
+          "?\n",
+          "宇宙",
+          ")?\n",
+          "陨",
+          "？",
+          "!\"\n"
+        ]
+      },
+      "16": {
+        "target_rank": 167,
+        "top10_ids": [
+          94432,
+          8997,
+          86427,
+          47369,
+          5267,
+          89478,
+          102493,
+          10205,
+          75558,
+          24734
+        ],
+        "top10_tokens": [
+          "？\n",
+          "。\n",
+          ")?\n",
+          "?\"\n",
+          "?\n",
+          "…\n",
+          "地球",
+          " […",
+          "?\";\n",
+          "!\"\n"
+        ]
+      },
+      "17": {
+        "target_rank": 179,
+        "top10_ids": [
+          94432,
+          5267,
+          8997,
+          86427,
+          47369,
+          4894,
+          624,
+          26850,
+          117454,
+          89478
+        ],
+        "top10_tokens": [
+          "？\n",
+          "?\n",
+          "。\n",
+          ")?\n",
+          "?\"\n",
+          "!\n",
+          ".\n",
+          "？\n\n",
+          "陨",
+          "…\n"
+        ]
+      },
+      "18": {
+        "target_rank": 138,
+        "top10_ids": [
+          94432,
+          86427,
+          5267,
+          47369,
+          45349,
+          75558,
+          117454,
+          11319,
+          102493,
+          89906
+        ],
+        "top10_tokens": [
+          "？\n",
+          ")?\n",
+          "?\n",
+          "?\"\n",
+          "?\r\n",
+          "?\";\n",
+          "陨",
+          "？",
+          "地球",
+          "？」"
+        ]
+      },
+      "19": {
+        "target_rank": 245,
+        "top10_ids": [
+          94432,
+          47369,
+          86427,
+          5267,
+          75558,
+          89906,
+          7521,
+          70828,
+          43869,
+          45349
+        ],
+        "top10_tokens": [
+          "？\n",
+          "?\"\n",
+          ")?\n",
+          "?\n",
+          "?\";\n",
+          "？」",
+          "?\"",
+          "?\")\n",
+          "\"?",
+          "?\r\n"
+        ]
+      },
+      "20": {
+        "target_rank": 245,
+        "top10_ids": [
+          94432,
+          89906,
+          101037,
+          86427,
+          47369,
+          75558,
+          118236,
+          32620,
+          4820,
+          70828
+        ],
+        "top10_tokens": [
+          "？\n",
+          "？」",
+          "吗",
+          ")?\n",
+          "?\"\n",
+          "?\";\n",
+          "南极",
+          "?\\",
+          "?:",
+          "?\")\n"
+        ]
+      },
+      "21": {
+        "target_rank": 198,
+        "top10_ids": [
+          75558,
+          26055,
+          86427,
+          32620,
+          23817,
+          89906,
+          101037,
+          46091,
+          45349,
+          94432
+        ],
+        "top10_tokens": [
+          "?\";\n",
+          "?</",
+          ")?\n",
+          "?\\",
+          ":\\\\",
+          "？」",
+          "吗",
+          "?\");\n",
+          "?\r\n",
+          "？\n"
+        ]
+      },
+      "22": {
+        "target_rank": 694,
+        "top10_ids": [
+          86427,
+          75558,
+          26055,
+          47369,
+          32620,
+          46091,
+          70828,
+          108593,
+          23817,
+          46311
+        ],
+        "top10_tokens": [
+          ")?\n",
+          "?\";\n",
+          "?</",
+          "?\"\n",
+          "?\\",
+          "?\");\n",
+          "?\")\n",
+          "额外",
+          ":\\\\",
+          "?$"
+        ]
+      },
+      "23": {
+        "target_rank": 72,
+        "top10_ids": [
+          89640,
+          75558,
+          102493,
+          108481,
+          50074,
+          86427,
+          43869,
+          47369,
+          70828,
+          60966
+        ],
+        "top10_tokens": [
+          ".nasa",
+          "?\";\n",
+          "地球",
+          "太空",
+          "planet",
+          ")?\n",
+          "\"?",
+          "?\"\n",
+          "?\")\n",
+          "NASA"
+        ]
+      },
+      "24": {
+        "target_rank": 38,
+        "top10_ids": [
+          80160,
+          102493,
+          111865,
+          32875,
+          121530,
+          105635,
+          108481,
+          111062,
+          50074,
+          113837
+        ],
+        "top10_tokens": [
+          " moons",
+          "地球",
+          "星球",
+          " planets",
+          "嫦",
+          "卫星",
+          "太空",
+          "火星",
+          "planet",
+          "行星"
+        ]
+      },
+      "25": {
+        "target_rank": 83,
+        "top10_ids": [
+          80160,
+          32875,
+          121530,
+          84222,
+          102493,
+          111062,
+          105635,
+          50074,
+          111865,
+          108481
+        ],
+        "top10_tokens": [
+          " moons",
+          " planets",
+          "嫦",
+          " asteroids",
+          "地球",
+          "火星",
+          "卫星",
+          "planet",
+          "星球",
+          "太空"
+        ]
+      },
+      "26": {
+        "target_rank": 21,
+        "top10_ids": [
+          80160,
+          32875,
+          84222,
+          102493,
+          105635,
+          54379,
+          111062,
+          46610,
+          11580,
+          50074
+        ],
+        "top10_tokens": [
+          " moons",
+          " planets",
+          " asteroids",
+          "地球",
+          "卫星",
+          " asteroid",
+          "火星",
+          " satellites",
+          " planet",
+          "planet"
+        ]
+      },
+      "27": {
+        "target_rank": 15,
+        "top10_ids": [
+          80160,
+          32875,
+          84222,
+          102493,
+          46610,
+          54379,
+          105635,
+          108194,
+          11580,
+          105361
+        ],
+        "top10_tokens": [
+          " moons",
+          " planets",
+          " asteroids",
+          "地球",
+          " satellites",
+          " asteroid",
+          "卫星",
+          "月亮",
+          " planet",
+          "一颗"
+        ]
+      },
+      "28": {
+        "target_rank": 9,
+        "top10_ids": [
+          80160,
+          102493,
+          32875,
+          84222,
+          105361,
+          113837,
+          105635,
+          11580,
+          9237,
+          54379
+        ],
+        "top10_tokens": [
+          " moons",
+          "地球",
+          " planets",
+          " asteroids",
+          "一颗",
+          "行星",
+          "卫星",
+          " planet",
+          " Earth",
+          " asteroid"
+        ]
+      },
+      "29": {
+        "target_rank": 5,
+        "top10_ids": [
+          80160,
+          84222,
+          102493,
+          32875,
+          9237,
+          113837,
+          54379,
+          11580,
+          43824,
+          61838
+        ],
+        "top10_tokens": [
+          " moons",
+          " asteroids",
+          "地球",
+          " planets",
+          " Earth",
+          "行星",
+          " asteroid",
+          " planet",
+          "Earth",
+          " planetary"
+        ]
+      },
+      "30": {
+        "target_rank": 173,
+        "top10_ids": [
+          80160,
+          17788,
+          108194,
+          67269,
+          76019,
+          17330,
+          9754,
+          27447,
+          56711,
+          94140
+        ],
+        "top10_tokens": [
+          " moons",
+          " moon",
+          "月亮",
+          "moon",
+          "Moon",
+          " Moon",
+          "月",
+          " Titan",
+          " lunar",
+          "Titan"
+        ]
+      },
+      "31": {
+        "target_rank": 198,
+        "top10_ids": [
+          80160,
+          17788,
+          67269,
+          9754,
+          76019,
+          108194,
+          105635,
+          17330,
+          46610,
+          94140
+        ],
+        "top10_tokens": [
+          " moons",
+          " moon",
+          "moon",
+          "月",
+          "Moon",
+          "月亮",
+          "卫星",
+          " Moon",
+          " satellites",
+          "Titan"
+        ]
+      },
+      "32": {
+        "target_rank": 80,
+        "top10_ids": [
+          80160,
+          17788,
+          9754,
+          27447,
+          105635,
+          46610,
+          23210,
+          94140,
+          48383,
+          34882
+        ],
+        "top10_tokens": [
+          " moons",
+          " moon",
+          "月",
+          " Titan",
+          "卫星",
+          " satellites",
+          " satellite",
+          "Titan",
+          ".Month",
+          "Sat"
+        ]
+      },
+      "33": {
+        "target_rank": 43,
+        "top10_ids": [
+          80160,
+          17788,
+          27447,
+          1378,
+          20428,
+          105361,
+          65521,
+          3224,
+          9754,
+          94140
+        ],
+        "top10_tokens": [
+          " moons",
+          " moon",
+          " Titan",
+          " two",
+          "….",
+          "一颗",
+          " ….",
+          ".\r\n",
+          "月",
+          "Titan"
+        ]
+      },
+      "34": {
+        "target_rank": 14,
+        "top10_ids": [
+          80160,
+          760,
+          17788,
+          220,
+          2503,
+          5810,
+          12236,
+          549,
+          1378,
+          279
+        ],
+        "top10_tokens": [
+          " moons",
+          " |",
+          " moon",
+          " ",
+          " ...",
+          " natural",
+          " ...\n",
+          " :",
+          " two",
+          " the"
+        ]
+      }
+    },
+    "reproduced_band_min_rank": {
+      "L19-28": 9,
+      "L23-31": 5
+    }
+  },
+  "panel_c_coverage": {
+    "Layers 19–28": {
+      "multihop_intermediate": {
+        "hits": 25,
+        "n": 93,
+        "rate": 0.26881720430107525
+      },
+      "arithmetic_numeric_intermediate": {
+        "hits": 6,
+        "n": 55,
+        "rate": 0.10909090909090909
+      }
+    },
+    "Layers 23–31": {
+      "multihop_intermediate": {
+        "hits": 36,
+        "n": 93,
+        "rate": 0.3870967741935484
+      },
+      "arithmetic_numeric_intermediate": {
+        "hits": 11,
+        "n": 55,
+        "rate": 0.2
+      }
+    }
+  },
+  "coverage_definition": "Any eligible single-token alias reaches the top 10 after excluding the clean next-token top 10, at the final prompt position, in any layer of the band. All items remain in the denominator; ineligible items count as misses.",
+  "evidence_boundary": "Panels use separate banks and do not establish item-level mediation."
+}

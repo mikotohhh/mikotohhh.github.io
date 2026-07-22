@@ -299,6 +299,36 @@ preregistration.
 > The arithmetic null could no longer be dismissed as proof that the code did
 > nothing, but the arithmetic target itself was still unvalidated.
 
+The figure below makes two otherwise abstract pieces of evidence concrete—but
+keeps them separate. The behavior bank shows what a selective failure looked
+like. A later, rank-only audit shows what remained in the intervention's
+post-exclusion selector on one illustrative item and how often known targets
+reached its top ten across two domains. The audit helps diagnose measurement
+coverage; it does not establish that a particular readout caused the
+illustrated behavioral failure.
+
+The full layer trace in Panel B is a read-only diagnostic generated for this
+visualization. Its layer-28 and layer-29 minima first had to reproduce the
+corresponding values in the frozen rank artifact.
+
+[![A formal two-hop failure under J-space deletion, an illustrative layer-by-layer selector trace, and aggregate targetability rates for multihop and arithmetic intermediates.](jspace-readout.svg)](jspace-readout.svg)
+
+*Figure 1. For display, Panel A uses the first frozen item by numeric ID for
+which clean and all three matched controls were correct but J-space deletion
+was wrong; this post-hoc display rule was deterministic but not preregistered.
+The intervention output the intermediate country rather than the requested
+capital, but no item-level lens trace was saved. Panel B uses a separate
+calibration item—the first clean-correct item by ID whose eligible English
+target reached the selector's post-exclusion top ten in both layer bands.
+Within the displayed layers 19–31, “Earth” entered at rank 9 in layer 28 and
+rank 5 in layer 29. Panel C summarizes separate rank-only banks: known
+multihop intermediates surfaced more often than numeric intermediates, although
+coverage was low in both. The rank panels do not show that the displayed
+readout caused Panel A's failure.*
+
+The [figure data](jspace-readout-data.json) include the exact outputs, source
+hashes, full selector trace, plotted counts, and metric definition.
+
 ## An attractive result that failed replication
 
 There is a chronology wrinkle worth making explicit. Before the later implementation
@@ -360,7 +390,7 @@ size.
 
 [![Forest plot showing the initial two-hop protection result and its failed fresh-bank replication.](replication-forest.svg)](replication-forest.svg)
 
-*Figure 1. Positive J-minus-matched protection would favor the claim that text
+*Figure 2. Positive J-minus-matched protection would favor the claim that text
 uniquely replaced J-space. The initial estimate was positive, but the fresh
 300-question replication reversed direction and crossed zero. Both runs used
 the earlier two-hop protocol, so I do not pool them with the later implementation
@@ -424,13 +454,17 @@ that a generation limit can itself become treatment-dependent.
 
 ### Was the automatic selector missing mathematical intermediates?
 
-So far, the J-lens had chosen its own targets: at every token position and
-layer, it selected the ten strongest vocabulary-labelled directions, excluding
-the clean model's ten most likely next tokens. On an order-of-operations bank,
-the actual intermediate number appeared among those selected directions on
-only **10.9%** of questions at layers 19–28 and **20.0%** at layers 23–31—about
-one question in ten or one in five. The analogous hidden facts in the two-hop
-task appeared more often: 26.9% and 38.7%.
+So far, the J-lens had chosen its own targets during intervention: at each
+processed token position and layer—through prompt prefill and subsequent
+decoding—it selected the ten strongest vocabulary-labelled directions,
+excluding the clean model's ten most likely next tokens. To audit whether a
+known intermediate was even available to that selector, I later froze a
+simpler diagnostic at just **one position: the final prompt token**. On an
+order-of-operations bank, the actual intermediate number appeared among the
+selected directions in any layer of the band on only **10.9%** of questions at
+layers 19–28 and **20.0%** at layers 23–31—about one question in ten or one in
+five. Known intermediates in a separate upstream multihop rank-only bank
+appeared more often: 26.9% and 38.7%.
 
 This made target selection the next tractable suspect, not the only remaining
 explanation. A low rank does not prove causal irrelevance, and the project's
@@ -537,7 +571,7 @@ an arithmetic causal effect.
 
 [![Design schematic of the program-targeted arithmetic experiment and four targeted-minus-clean estimates near zero.](wp17-oracle.svg)](wp17-oracle.svg)
 
-*Figure 2. The program supplied the correct value 6, but deleting directions
+*Figure 3. The program supplied the correct value 6, but deleting directions
 labelled with 6 changed accuracy by approximately zero. This bypassed target
 selection; it did not prove that those directions were Qwen's internal
 representation of 6. The task also allowed a compact visible scratchpad.*
@@ -559,7 +593,7 @@ never established whether the lens reached Qwen's arithmetic states.
 
 [![Forest plot contrasting the large two-hop effect with math effects centered near zero.](effect-forest.svg)](effect-forest.svg)
 
-*Figure 3. Negative values mean that the intervention reduced accuracy. The
+*Figure 4. Negative values mean that the intervention reduced accuracy. The
 fixed two-hop check shows a large loss beyond matched controls; the math
 estimates remain near zero. Because the rows come from different protocols,
 this is an evidence map rather than a pooled analysis.*
