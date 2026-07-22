@@ -167,7 +167,7 @@ list rather than another benchmark sweep.
 | Model | Claude Sonnet/Opus 4.5 | Qwen3-4B |
 | Lens | Model-specific lenses used by the authors | Third-party Qwen3-4B lens fitted on Wikitext |
 | GSM8K quantity | Score retained relative to clean | Paired absolute accuracy change and a direct-minus-CoT contrast |
-| Broad intervention | Top-10 J-space ablation | Paper-raw top-10 deletion with random, early, and matched controls |
+| Broad intervention | Top-10 J-space ablation | The paper's raw top-10 deletion with random, early, and matched controls |
 | Arithmetic causal test | Curated patching and coordinate-swap cases | Program-scale deletion of specified numeric token directions |
 
 I proposed a stricter extension: **bounded interchangeability**. CoT can
