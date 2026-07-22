@@ -14,6 +14,9 @@ outputs:
 
 params:
   env: production
+  analytics:
+    google:
+      SiteVerificationTag: "bbc8a0MTBHAcItVCloWbNY2iRBhAZt4weM6_0TTH1gw"
   author: Luozhong Zhou
   description: "Luozhong Zhou — notes and experiments on machine learning research"
   defaultTheme: auto
