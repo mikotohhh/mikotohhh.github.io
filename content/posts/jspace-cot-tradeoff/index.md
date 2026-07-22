@@ -1,36 +1,65 @@
 ---
-title: "When a Null Result Is Not a Refutation"
+title: "Can Chain of Thought Replace a Model's Internal Workspace?"
 date: 2026-07-22
 author: "Luozhong Zhou"
 tags: ["AI safety", "mechanistic interpretability", "chain-of-thought", "causal interventions", "experiments"]
 math: true
 draft: false
-summary: "A causal audit of whether written reasoning substitutes for a verbalizable internal workspace in Qwen3-4B."
+summary: "A preregistered cross-model stress test of Anthropic's J-space result—and a causal audit of what an arithmetic null can actually establish."
 ---
 
-The result that changed my interpretation was not the first arithmetic null. It
-was a contrast between two experiments using the same pinned Qwen3-4B model,
-Wikitext J-lens, and raw J-space geometry.
+In July 2026, Anthropic's interpretability team published [*Verbalizable
+Representations Form a Global Workspace in Language
+Models*](https://transformer-circuits.pub/2026/workspace/index.html). The paper
+makes a striking proposal: language models contain a small, privileged set of
+internal representations that function like a **global workspace**. This is a
+functional analogy, not a claim about subjective experience: information in
+the workspace can be reported in words, deliberately manipulated, and reused
+across otherwise different computations.
 
-On latent two-hop recall, J-space ablation reduced accuracy by **32.5 percentage
-points** relative to clean inference, and by **23.3 points** relative to three
-same-geometry matched controls. Yet on 384 fresh arithmetic programs, directly
-targeting token directions for known intermediate values changed accuracy by
-only **+0.3 points** in the primary layer band.
+The authors identify these representations using the **Jacobian lens**, or
+J-lens. Roughly, the lens associates directions in a model's hidden activations
+with vocabulary-level concepts according to their average effect on later
+verbal output. Sparse combinations of the corresponding token-indexed
+directions define what the paper calls **J-space**: a changing set of concepts
+the model can hold and reason with even when it has not written them down.
 
-The intervention could bite. It just did not bite arithmetic.
+One of the paper's experiments suggests a concrete relationship between this
+hidden workspace and visible chain-of-thought reasoning. Ablating J-space hurt
+Claude Sonnet 4.5 much more when it answered GSM8K problems directly than when
+it wrote out intermediate steps. The authors' interpretation is that writing
+reasoning onto the page externalizes information the model would otherwise
+have to carry internally. In that sense, a textual scratchpad may partly
+substitute for a hidden workspace.
 
-That changed the question. A failed replication can mean that the original
-mechanism does not transfer, but it can also mean that the new model's lens does
-not capture the relevant state, that an automatic selector misses its target,
-or that the intervention changes a readable direction without changing the
-computation. The project therefore became less about asking *whether the source
-paper was wrong* and more about locating the first unsupported link in a causal
-chain.
+I asked two nested questions. First, does that CoT–workspace relationship
+transfer to Qwen3-4B when the intervention uses a third-party J-lens fitted on
+Wikitext? Second, if it does, where does the substitution stop? Written
+reasoning can preserve the result of a completed step, but the model must still
+decide what step to take next. I therefore preregistered the second question as
+a stricter hypothesis—**bounded interchangeability**: as mathematical problems
+require harder step selection, chain of thought should become less able to
+protect performance from J-space ablation.
 
-This post describes that audit. Along the way, an independent replication also
-overturned my own initially significant mechanism result. The final conclusion
-is narrower than the story I started with, but much better identified:
+Because the model, lens, and parts of the intervention protocol differ, this
+was not a literal reproduction of Anthropic's Claude experiment. It was a
+cross-model stress test and construct audit. I crossed direct and written-CoT
+answering with clean and J-ablated inference, added controls for generic
+perturbation, and then followed the first null with increasingly targeted
+causal tests.
+
+The preregistered prediction was **not supported**, but “the Anthropic result
+failed to replicate” is not the right summary. The arithmetic experiments never
+established the prerequisite J-specific damage that chain of thought was
+supposed to prevent. Meanwhile, the same intervention produced a large,
+content-specific effect on latent two-hop recall. And an initially significant
+claim that CoT specifically compensated for J-space ablation disappeared in an
+independent replication.
+
+That combination changed the project from a simple replication into a causal
+audit: when an intervention gives a null result on a new model, how do we tell
+the absence of a mechanism from failure to measure or manipulate it? My final
+conclusion is narrower than the story I started with, but better identified:
 
 > Under a pinned Qwen3-4B, third-party Wikitext J-lens, and paper-raw ablation
 > setup, I found a content-specific causal effect on latent fact chaining but no
@@ -41,9 +70,11 @@ is narrower than the story I started with, but much better identified:
 This began as [CS 2881R Homework
 Zero](https://boazbk.github.io/mltheoryseminar/hw0-2026/) and grew into a series
 of preregistered replications, positive controls, protocol audits, and
-construct-validity tests. The [code, frozen analyses, formal WP17 generations,
-and manifests are collected in the project
-repository](https://github.com/mikotohhh/cs2881r-hw0-jspace).
+construct-validity tests. The [code, frozen analyses, formal experiment
+outputs, and manifests are collected in the project
+repository](https://github.com/mikotohhh/cs2881r-hw0-jspace). *(The repository
+is private until the course deadline in early August 2026; the artifact links
+in this post will resolve once it becomes public.)*
 
 ## The result in thirty seconds
 
@@ -60,9 +91,10 @@ repository](https://github.com/mikotohhh/cs2881r-hw0-jspace).
   specifically substituting for J-space.
 - **More precision did not turn the arithmetic null into a mechanism result.**
   A fresh 4,600-item GSM-Symbolic experiment constrained the tested effect to
-  roughly ±2 points. An oracle-targeted arithmetic experiment then bypassed the
-  automatic selector and again found effects near zero—but still did not prove
-  that the targeted raw token directions were valid internal arithmetic states.
+  roughly ±2 points. On a compact visible-scratchpad task, an oracle-targeted
+  arithmetic experiment then bypassed the automatic selector and again found
+  effects near zero—but still did not prove that the targeted raw token
+  directions were valid internal arithmetic states.
 
 ## Why this matters for AI safety
 
@@ -83,29 +115,26 @@ measure CoT faithfulness or deception. Its safety relevance is methodological:
 **before relying on a causal interpretability tool, establish what the tool can
 and cannot identify in the model where it is being used.**
 
-## The original result—and the stricter prediction I tested
+## From Anthropic's result to a falsifiable extension
 
-Gurnee et al.'s [*Verbalizable Representations Form a Global Workspace in
-Language Models*](https://transformer-circuits.pub/2026/workspace/index.html) studies
-Jacobian-lens directions that map residual-stream states into vocabulary-level
-concepts. The paper argues that a sparse set of these verbalizable directions
-forms a shared internal workspace, or **J-space**, used across layers for
-flexible computation.
+The opening description compresses several distinct claims. More formally, a
+J-lens maps residual-stream states into vocabulary-level concepts, and the
+paper argues that sparse combinations of these verbalizable directions act as
+a shared workspace used across layers for flexible computation.
 
-One result was especially suggestive. On Sonnet 4.5, GSM8K solved with explicit
-CoT was substantially more robust to broad J-space ablation than the same
-problems answered directly. The paper interprets this as externalization:
-writing intermediate states into the context reduces the need to keep them in
-an internal workspace. Figure 24 reports score relative to the clean model—for
-example, **0.994 retention with CoT versus 0.864 with direct answering** under
-the medium intervention—not absolute accuracy. Its arithmetic case studies
-offer a second kind of evidence, using contextual activation patching or
-coordinate swaps to localize and alter particular intermediate values.
+Two pieces of the source paper are especially relevant here. First, its Figure
+24 reports task score retained relative to the clean model under broad
+ablation—for example, **0.994 retention with CoT versus 0.864 with direct
+answering** at the medium intervention strength—not absolute accuracy. Second,
+its arithmetic case studies use contextual activation patching or coordinate
+swaps to localize and alter particular intermediate values.
 
 Those are related but not identical claims. The benchmark result concerns
 relative robustness under broad ablation; the case studies concern the causal
-role of specific intermediate states. My experiments mainly use deletion, not
-the paper's counterfactual coordinate swaps. They also move the method from
+role of specific intermediate states. My experiments mainly use deletion—
+projecting hidden states away from the lens's raw token directions, the
+“paper-raw” geometry referenced throughout—not the paper's counterfactual
+coordinate swaps. They also move the method from
 Claude to Qwen and use a third-party lens fitted on Wikitext. This is therefore
 a **cross-model stress test and construct audit**, not a literal reproduction of
 every component of the source experiment.
@@ -151,7 +180,8 @@ $$
 \Delta_m = A_{m,J} - A_{m,C}.
 $$
 
-The registered direct-minus-CoT contrast is $\Delta_D - \Delta_T$: **negative**
+The registered direct-minus-CoT contrast is $\Delta_D - \Delta_T$ (*D* for
+direct answering, *T* for the written-text CoT mode): **negative**
 values mean that CoT loses less accuracy under ablation. Random directions, early-layer
 interventions, and same-geometry matched perturbations tested whether any loss
 was specific to selected J-space content rather than generic damage.
@@ -231,7 +261,8 @@ The first priority was a behavioral positive control. I used two-hop questions
 that require combining two latent facts, alongside sentiment and extraction
 tasks that should remain largely automatic. After auditing the operator and
 mapping the source paper's depth range onto Qwen, I fixed a 40-item follow-up
-battery using the literal paper-raw geometry at layers 19–28.
+battery—the “v3 battery” referenced in the figures—using the literal
+paper-raw geometry at layers 19–28.
 
 The result was large and selective:
 
@@ -253,6 +284,9 @@ microscope that resolves one tissue is not automatically calibrated for
 another. The fixed battery also followed an exploratory smoke test; I describe
 it as a fixed formal follow-up, not as a blinded preregistration.
 
+In short: the intervention could bite. Whether it would bite arithmetic was
+now the question.
+
 The full operator battery and dose measurements are
 [available here](https://github.com/mikotohhh/cs2881r-hw0-jspace/blob/58d0a2f1a253781c4d4d229a988b48fcb987f361/results/v3_validation/operator_battery/results_v2.md).
 
@@ -272,8 +306,9 @@ uses automatic top-readout; WP17 uses frozen AST-derived aliases.*
 The two-hop task then produced the most attractive result in the project—and
 the most important reason not to stop at an attractive result.
 
-In an archived v2 2×2 experiment, written CoT substantially reduced the loss
-under J-space ablation. After adding a strict pointwise-matched control, the
+In an earlier 2×2 experiment—run under the project's second-generation
+protocol, archived as “v2” before the v3 audit above—written CoT substantially
+reduced the loss under J-space ablation. After adding a strict pointwise-matched control, the
 estimated difference between J-space compensation and matched-perturbation
 compensation was **+13.3 points** `[+3.3, +24.0]` across all 150 items. That
 looked like the mechanism I had hoped to find: text specifically substituting
@@ -346,7 +381,8 @@ new numbers. A 400-item experiment produced only 14% clean direct accuracy,
 leaving too little observation window for a useful small-effect estimate. I
 treated that as a failed gate, not as evidence for or against the mechanism.
 
-The precision follow-up enumerated 5,000 items across 100 templates. Because
+The precision follow-up—experiment “WP16” in the figures—enumerated 5,000
+items across 100 templates. Because
 the original 400 had already motivated the experiment, the primary analysis
 used only the **4,600 fresh instances**, resampling templates rather than
 pretending that variants of one template were independent. The result was a
@@ -397,8 +433,8 @@ which the intermediate to target was specified independently of the readout.
 
 ## Bypassing selection with program-defined intermediates
 
-The final experiment generated 384 arithmetic expressions from canonical
-abstract syntax trees (ASTs). Each tree marked one intermediate whose value was
+The final experiment—“WP17” in the figures and artifacts—generated 384
+arithmetic expressions from canonical abstract syntax trees (ASTs). Each tree marked one intermediate whose value was
 consumed by one, two, or three later operations. For example:
 
 ```text
