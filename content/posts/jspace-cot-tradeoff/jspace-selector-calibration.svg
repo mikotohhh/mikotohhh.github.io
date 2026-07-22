@@ -373,7 +373,7 @@ L -2 0
      </g>
     </g>
     <g id="text_19">
-     <text style="fill: #262626; font: 11px 'DejaVu Sans'; text-anchor: middle" x="14.118281" y="159.367143" transform="rotate(-90 14.118281 159.367143)">Eligible English ‘Earth’ rank</text>
+     <text style="fill: #262626; font: 11px 'DejaVu Sans'; text-anchor: middle" x="14.118281" y="159.367143" transform="rotate(-90 14.118281 159.367143)">Rank of the English label ‘Earth’</text>
     </g>
    </g>
    <g id="patch_6">
@@ -640,7 +640,7 @@ z
    <text style="fill: #667085; font: 10.7px 'DejaVu Sans'; text-anchor: start" x="54.534063" y="39.630328" transform="rotate(-0 54.534063 39.630328)">Two question sets used only to measure rankings; these results are descriptive.</text>
   </g>
   <g id="text_43">
-   <text style="fill: #667085; font: 9.2px 'DejaVu Sans'; text-anchor: start" x="54.534063" y="472.314688" transform="rotate(-0 54.534063 472.314688)">Hit = an eligible name reached the top 10 after likely next tokens were excluded, at the final prompt position in any layer.</text>
+   <text style="fill: #667085; font: 9.2px 'DejaVu Sans'; text-anchor: start" x="54.534063" y="472.314688" transform="rotate(-0 54.534063 472.314688)">Hit = a one-token name for the intermediate reached the top 10 after likely next tokens were excluded, in any layer.</text>
   </g>
  </g>
  <defs>

@@ -211,7 +211,7 @@ z
     <text style="fill: #d55e00; font: 700 13px 'DejaVu Sans'; text-anchor: middle" x="660.222253" y="196.835194" transform="rotate(-0 660.222253 196.835194)">✕</text>
    </g>
    <g id="text_22">
-    <text style="fill: #667085; font: 9px 'DejaVu Sans'; text-anchor: start" x="36.630938" y="222.584188" transform="rotate(-0 36.630938 222.584188)">Display rule (chosen after the run): first qualifying frozen item ID.</text>
+    <text style="fill: #667085; font: 9px 'DejaVu Sans'; text-anchor: start" x="36.630938" y="222.584188" transform="rotate(-0 36.630938 222.584188)">Example chosen after the run: lowest-numbered question meeting the rule.</text>
    </g>
   </g>
   <g id="axes_2">
@@ -549,7 +549,7 @@ L -2 0
       </g>
      </g>
      <g id="text_46">
-      <text style="fill: #262626; font: 11px 'DejaVu Sans'; text-anchor: middle" x="61.512676" y="348.049588" transform="rotate(-90 61.512676 348.049588)">Eligible English ‘Earth’ rank</text>
+      <text style="fill: #262626; font: 11px 'DejaVu Sans'; text-anchor: middle" x="61.512676" y="348.049588" transform="rotate(-90 61.512676 348.049588)">Rank of the English label ‘Earth’</text>
      </g>
     </g>
     <g id="patch_13">
@@ -808,7 +808,7 @@ z
    <text style="fill: #667085; font: 11.2px 'DejaVu Sans'; text-anchor: start" x="36.630938" y="42.50865" transform="rotate(-0 36.630938 42.50865)">The behavior and ranking panels use separate question sets and cannot establish item-level mediation.</text>
   </g>
   <g id="text_67">
-   <text style="fill: #667085; font: 9.2px 'DejaVu Sans'; text-anchor: start" x="36.630938" y="698.358687" transform="rotate(-0 36.630938 698.358687)">Descriptive ranking check. Hit = an eligible name reached the top 10 after likely next tokens were excluded, at the final prompt position in any layer.</text>
+   <text style="fill: #667085; font: 9.2px 'DejaVu Sans'; text-anchor: start" x="36.630938" y="698.358687" transform="rotate(-0 36.630938 698.358687)">Descriptive ranking check. Hit = a one-token name for the intermediate reached the top 10 after likely next tokens were excluded, in any layer.</text>
   </g>
  </g>
  <defs>

@@ -179,7 +179,7 @@ z
     <text style="fill: #d55e00; font: 700 13px 'DejaVu Sans'; text-anchor: middle" x="615.0528" y="191.078788" transform="rotate(-0 615.0528 191.078788)">✕</text>
    </g>
    <g id="text_20">
-    <text style="fill: #667085; font: 9px 'DejaVu Sans'; text-anchor: start" x="20.9664" y="218.157761" transform="rotate(-0 20.9664 218.157761)">Post-hoc display rule: first qualifying frozen item by numeric ID.</text>
+    <text style="fill: #667085; font: 9px 'DejaVu Sans'; text-anchor: start" x="20.9664" y="218.157761" transform="rotate(-0 20.9664 218.157761)">Example chosen after the run: lowest-numbered question meeting the rule.</text>
    </g>
   </g>
   <g id="text_21">

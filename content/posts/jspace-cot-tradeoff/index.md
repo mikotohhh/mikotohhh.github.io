@@ -38,8 +38,10 @@ intermediate fact *France*. If the lens reports *France* while the model is
 solving the question, we can remove the component of the hidden state that
 points in the *France*-labelled direction and see whether the final answer
 changes. This example gives the intuition. In my main intervention, I did not
-hand-pick *France*: at every processed token and layer, the lens selected the
-ten strongest eligible directions, removed them, and let the model continue.
+hand-pick *France*. At every processed token and layer, the lens first excluded
+directions associated with the unmodified model's ten most likely next tokens,
+then removed the ten strongest remaining directions. This guard reduced the
+risk of directly suppressing words the model was about to produce.
 
 Two distinctions matter for everything that follows. First, each direction is
 labelled with a vocabulary token through the lens construction. The training
@@ -194,8 +196,9 @@ Throughout this post:
 - *J-specific damage* means damage beyond the matched generic control;
 - *CoT protection* means that written reasoning loses less accuracy than direct
   answering under the same intervention; and
-- *J-specific protection* requires both at once: extra J-space damage that
-  written reasoning preferentially removes.
+- *J-specific protection* is the difference between protection under J-space
+  deletion and protection under the matched random perturbation. A positive
+  value means that written reasoning reduced more of the J-space damage.
 
 With that standard fixed, the first experiment asked for the prerequisite to
 any protection claim: was there substantial arithmetic damage for written
@@ -308,9 +311,9 @@ but written answers only four, the eight-point difference is CoT protection.
 To claim that text replaced J-space in particular, that protection must also be
 larger than the protection produced by the matched generic perturbation.
 
-In the early 150-question set, J-minus-matched protection was **+13.3 points**
-`[+3.3, +24.0]`. It looked like the mechanism I had hoped to find: written text
-specifically substituting for damaged J-space content.
+In the early 150-question set, estimated J-specific protection was **+13.3
+points** `[+3.3, +24.0]`. It looked like the mechanism I had hoped to find:
+written text specifically substituting for damaged J-space content.
 
 Forty items came from a validation set that had already served as development
 material. On the 110 entirely new questions alone, the point estimate remained
@@ -330,11 +333,11 @@ It was my own follow-up, not a replication by a separate research team.
 |---|---:|---:|
 | Protection under J-space deletion | +4.3 pp | `[−3.0, +11.3]` |
 | Protection under the matched perturbation | +8.0 pp | `[+1.3, +14.3]` |
-| J-space − matched protection | **−3.7 pp** | `[−12.0, +4.0]` |
+| J-specific protection (J-space − matched) | **−3.7 pp** | `[−12.0, +4.0]` |
 
 The point estimates suggested protection under both interventions, but only
-the matched-control interval excluded zero. The J-minus-matched estimate was
-−3.7 points and crossed zero, so I withdrew the preregistered specificity
+the matched-control interval excluded zero. Estimated J-specific protection
+was −3.7 points and crossed zero, so I withdrew the preregistered specificity
 claim.
 
 Both the 150-question result and the 300-question replication used the earlier
@@ -353,7 +356,7 @@ protocol would have done on the 300 new questions.
 
 [![Forest plot showing the initial two-hop protection result and its failed replication on 300 new questions.](replication-forest.svg)](replication-forest.svg)
 
-*Figure 1. Positive J-minus-matched protection would favor the claim that text
+*Figure 1. Positive J-specific protection would favor the claim that text
 uniquely replaced J-space. The initial estimate was positive, but the fresh
 300-question replication reversed direction and crossed zero. Both runs used
 the earlier two-hop protocol and are reported separately from the later
@@ -375,7 +378,7 @@ a small pilot, then fixed the procedure for the rerun. Since the 40 two-hop
 questions had already been used for development, this was a positive-control
 check rather than an independent test of generalization.
 
-One frozen item shows what the selective failure looked like:
+Here is one example of the selective failure:
 
 [![Clean and matched-control runs answer Mexico City, while J-space deletion answers only the intermediate country Mexico.](jspace-twohop-example.svg)](jspace-twohop-example.svg)
 
@@ -529,7 +532,7 @@ Evaluate: 2 + 4 + (8 + (7 - 3))
 
 program node: 2 + 4
 program value: 6
-eligible single-token aliases: "6", "six", " six"
+one-token spellings: "6", "six", " six"
 final answer: 18
 ```
 
@@ -550,10 +553,10 @@ exactly that:
 ```
 
 The intervention bypassed the selector. For a known value such as *6*, it
-supplied every eligible direction labelled by a one-token spelling, including
-`"6"`, `"six"`, and `" six"`. It did this at every processed prompt and
-generation position within the chosen layer range. The primary version left a
-direction untouched whenever the unmodified model also ranked it among its ten
+supplied every direction labelled by a spelling that Qwen's tokenizer treats as
+one token, including `"6"`, `"six"`, and `" six"`. It did this at every
+processed prompt and generation position within the chosen layer range. The
+primary version left a direction untouched whenever the unmodified model also ranked it among its ten
 most likely next tokens at that position. This reduced the risk of simply
 suppressing a token that the model was about to write. A later, more aggressive
 version removed that safeguard. In both versions, the intervention subtracted
@@ -565,16 +568,21 @@ or it may never store 6 as a stable value.
 
 The design specified in advance included:
 
-- 384 expressions spanning four operations and three downstream depths;
-- two plausible layer bands, 19–28 and 23–31;
-- three matched-control seeds for each band;
+- 384 expressions spanning four operations, with the chosen intermediate used
+  by one, two, or three later operations;
+- two layer ranges selected before the formal run for different reasons:
+  L19–28 mapped the source paper's medium-depth intervention onto Qwen and was
+  the primary range; L23–31 was selected earlier by a fixed rule around this
+  Qwen lens's autocorrelation peak, and let me retest the exact layer range
+  used in the earlier GSM-Symbolic study;
+- three matched random controls for each layer range;
 - a primary *masked* deletion that left likely next-token directions untouched;
   and
 - a more aggressive unmasked follow-up, run only after the masked test failed
   its preregistered criterion.
 
-The questions, eligible token spellings, execution checks, and decision rule
-were fixed before the formal run. Clean accuracy was **94.0%** with a 95% interval
+The questions, token spellings, execution checks, and decision rule were fixed
+before the formal run. Clean accuracy was **94.0%** with a 95% interval
 of `[91.7, 96.1]`, so unlike GSM-Symbolic, this task gave the intervention
 ample accuracy to reduce. Negative values in the next table would mean that
 target deletion harmed accuracy. Every comparison with the unmodified model
