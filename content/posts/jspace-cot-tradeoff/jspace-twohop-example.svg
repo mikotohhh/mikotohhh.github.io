@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="664.0128pt" height="233.1252pt" viewBox="0 0 664.0128 233.1252" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-07-22T22:37:38.373323</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.9.4, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 233.1252
+L 664.0128 233.1252
+L 664.0128 0
+L 0 0
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="patch_2">
+   <path d="M 14.0544 227.3652
+L 649.9584 227.3652
+Q 658.2528 227.3652 658.2528 224.298
+L 658.2528 47.934
+Q 658.2528 44.8668 649.9584 44.8668
+L 14.0544 44.8668
+Q 5.76 44.8668 5.76 47.934
+L 5.76 224.298
+Q 5.76 227.3652 14.0544 227.3652
+z
+" style="fill: #f8fafc; stroke: #e4e7ec; stroke-width: 0.8; stroke-linejoin: miter"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_3">
+    <path d="M 366.84288 124.813368
+L 626.87232 124.813368
+Q 638.06976 124.813368 638.06976 121.730832
+L 638.06976 102.550608
+Q 638.06976 99.468072 626.87232 99.468072
+L 366.84288 99.468072
+Q 355.64544 99.468072 355.64544 102.550608
+L 355.64544 121.730832
+Q 355.64544 124.813368 366.84288 124.813368
+z
+" clip-path="url(#p9a98be23cc)" style="fill: #eef1f4"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 366.84288 162.488808
+L 626.87232 162.488808
+Q 638.06976 162.488808 638.06976 159.406272
+L 638.06976 140.226048
+Q 638.06976 137.143512 626.87232 137.143512
+L 366.84288 137.143512
+Q 355.64544 137.143512 355.64544 140.226048
+L 355.64544 159.406272
+Q 355.64544 162.488808 366.84288 162.488808
+z
+" clip-path="url(#p9a98be23cc)" style="fill: #dceef8"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 366.84288 200.164248
+L 626.87232 200.164248
+Q 638.06976 200.164248 638.06976 197.081712
+L 638.06976 177.901488
+Q 638.06976 174.818952 626.87232 174.818952
+L 366.84288 174.818952
+Q 355.64544 174.818952 355.64544 177.901488
+L 355.64544 197.081712
+Q 355.64544 200.164248 366.84288 200.164248
+z
+" clip-path="url(#p9a98be23cc)" style="fill: #fbe7db"/>
+   </g>
+   <g id="text_1">
+    <text style="fill: #667085; font: 700 9.4px 'DejaVu Sans'; text-anchor: start" x="20.9664" y="66.195131" transform="rotate(-0 20.9664 66.195131)">CORRECTED-PROTOCOL RERUN  ·  REUSED 40-ITEM BANK</text>
+   </g>
+   <g id="text_2">
+    <text style="fill: #667085; font: 700 9.2px 'DejaVu Sans'; text-anchor: start" x="20.9664" y="95.156002" transform="rotate(-0 20.9664 95.156002)">PROMPT</text>
+   </g>
+   <g id="text_3">
+    <text style="fill: #262626; font: 11.4px 'DejaVu Sans'" transform="translate(20.9664 112.240339)">The capital of the country where</text>
+    <text style="fill: #262626; font: 11.4px 'DejaVu Sans'" transform="translate(20.9664 126.305178)">Frida Kahlo was born is …</text>
+   </g>
+   <g id="text_4">
+    <text style="fill: #667085; font: 700 9px 'DejaVu Sans'; text-anchor: start" x="20.9664" y="150.587077" transform="rotate(-0 20.9664 150.587077)">TASK-REQUIRED CHAIN  ·  NOT MEASURED INTERNAL STATES</text>
+   </g>
+   <g id="text_5">
+    <g id="patch_6">
+     <path d="M 27.1872 183.734409
+L 97.427356 183.734409
+Q 102.047356 183.734409 102.047356 179.114409
+L 102.047356 168.468471
+Q 102.047356 163.848471 97.427356 163.848471
+L 27.1872 163.848471
+Q 22.5672 163.848471 22.5672 168.468471
+L 22.5672 179.114409
+Q 22.5672 183.734409 27.1872 183.734409
+z
+" style="fill: #e9eef3"/>
+    </g>
+    <text style="fill: #344054; font: 700 11px 'DejaVu Sans'; text-anchor: start" x="27.1872" y="176.826752" transform="rotate(-0 27.1872 176.826752)">Frida Kahlo</text>
+   </g>
+   <g id="text_6">
+    <text style="fill: #667085; font: 16px 'DejaVu Sans'; text-anchor: start" x="119.25504" y="178.20644" transform="rotate(-0 119.25504 178.20644)">→</text>
+   </g>
+   <g id="text_7">
+    <g id="patch_7">
+     <path d="M 145.3824 183.734409
+L 188.734431 183.734409
+Q 193.354431 183.734409 193.354431 179.114409
+L 193.354431 168.468471
+Q 193.354431 163.848471 188.734431 163.848471
+L 145.3824 163.848471
+Q 140.7624 163.848471 140.7624 168.468471
+L 140.7624 179.114409
+Q 140.7624 183.734409 145.3824 183.734409
+z
+" style="fill: #e9eef3"/>
+    </g>
+    <text style="fill: #344054; font: 700 11px 'DejaVu Sans'; text-anchor: start" x="145.3824" y="176.826752" transform="rotate(-0 145.3824 176.826752)">Mexico</text>
+   </g>
+   <g id="text_8">
+    <text style="fill: #667085; font: 16px 'DejaVu Sans'; text-anchor: start" x="210.07872" y="178.20644" transform="rotate(-0 210.07872 178.20644)">→</text>
+   </g>
+   <g id="text_9">
+    <g id="patch_8">
+     <path d="M 236.82816 183.777378
+L 308.281754 183.777378
+Q 312.901754 183.777378 312.901754 179.157377
+L 312.901754 168.425502
+Q 312.901754 163.805502 308.281754 163.805502
+L 236.82816 163.805502
+Q 232.20816 163.805502 232.20816 168.425502
+L 232.20816 179.157377
+Q 232.20816 183.777378 236.82816 183.777378
+z
+" style="fill: #e9eef3"/>
+    </g>
+    <text style="fill: #344054; font: 700 11px 'DejaVu Sans'; text-anchor: start" x="236.82816" y="176.783784" transform="rotate(-0 236.82816 176.783784)">Mexico City</text>
+   </g>
+   <g id="text_10">
+    <text style="fill: #667085; font: 700 9.2px 'DejaVu Sans'; text-anchor: start" x="363.1104" y="95.156002" transform="rotate(-0 363.1104 95.156002)">OBSERVED OUTPUTS</text>
+   </g>
+   <g id="text_11">
+    <text style="fill: #667085; font: 700 10px 'DejaVu Sans'; text-anchor: start" x="375.552" y="114.900095" transform="rotate(-0 375.552 114.900095)">Clean</text>
+   </g>
+   <g id="text_12">
+    <text style="fill: #262626; font: 10.8px 'DejaVu Sans'; text-anchor: start" x="487.5264" y="115.120845" transform="rotate(-0 487.5264 115.120845)">Mexico City.</text>
+   </g>
+   <g id="text_13">
+    <text style="fill: #667085; font: 700 13px 'DejaVu Sans'; text-anchor: middle" x="615.0528" y="115.727908" transform="rotate(-0 615.0528 115.727908)">✓</text>
+   </g>
+   <g id="text_14">
+    <text style="fill: #0072b2; font: 700 10px 'DejaVu Sans'; text-anchor: start" x="375.552" y="152.575535" transform="rotate(-0 375.552 152.575535)">Matched controls</text>
+   </g>
+   <g id="text_15">
+    <text style="fill: #262626; font: 10.8px 'DejaVu Sans'; text-anchor: start" x="487.5264" y="152.796285" transform="rotate(-0 487.5264 152.796285)">Mexico City.   (3/3)</text>
+   </g>
+   <g id="text_16">
+    <text style="fill: #0072b2; font: 700 13px 'DejaVu Sans'; text-anchor: middle" x="615.0528" y="153.403347" transform="rotate(-0 615.0528 153.403347)">✓</text>
+   </g>
+   <g id="text_17">
+    <text style="fill: #d55e00; font: 700 10px 'DejaVu Sans'; text-anchor: start" x="375.552" y="190.250975" transform="rotate(-0 375.552 190.250975)">J-space deletion</text>
+   </g>
+   <g id="text_18">
+    <text style="fill: #262626; font: 10.8px 'DejaVu Sans'; text-anchor: start" x="487.5264" y="190.471725" transform="rotate(-0 487.5264 190.471725)">Mexico.</text>
+   </g>
+   <g id="text_19">
+    <text style="fill: #d55e00; font: 700 13px 'DejaVu Sans'; text-anchor: middle" x="615.0528" y="191.078788" transform="rotate(-0 615.0528 191.078788)">✕</text>
+   </g>
+   <g id="text_20">
+    <text style="fill: #667085; font: 9px 'DejaVu Sans'; text-anchor: start" x="20.9664" y="218.157761" transform="rotate(-0 20.9664 218.157761)">Post-hoc display rule: first qualifying frozen item by numeric ID.</text>
+   </g>
+  </g>
+  <g id="text_21">
+   <text style="fill: #262626; font: 700 17px 'DejaVu Sans'; text-anchor: start" x="20.9664" y="18.677344" transform="rotate(-0 20.9664 18.677344)">A selective two-hop failure</text>
+  </g>
+  <g id="text_22">
+   <text style="fill: #667085; font: 10.7px 'DejaVu Sans'; text-anchor: start" x="20.9664" y="31.782328" transform="rotate(-0 20.9664 31.782328)">The task chain is logical structure, not a saved trace of the model’s internal state.</text>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p9a98be23cc">
+   <rect x="20.9664" y="50.49" width="622.08" height="171.252"/>
+  </clipPath>
+ </defs>
+</svg>

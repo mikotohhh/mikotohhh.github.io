@@ -6,6 +6,7 @@
     "math_instrument_results_v2.json": "260925d0fc3cb4a04cd30e547c58a669e60f877837240a7755a92b67092f373a"
   },
   "panel_a_behavior": {
+    "bank_scope": "corrected-protocol rerun of the original 40-item validation subset embedded in the early 150-item bank; not an independent item sample",
     "selection_rule": "post-hoc display rule: lowest frozen item index with clean correct, jspace_paper_raw wrong, and all three matched_paper_raw controls correct",
     "index": 11,
     "item_key": "v3-operator-battery-v2:11:b37ec705bdbdd507c8be2a9f2d5f7c3a70aabf02c0762bb10c7c1fe9c69bb584",
