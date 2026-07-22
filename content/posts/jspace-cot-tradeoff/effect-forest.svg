@@ -209,13 +209,13 @@ L 684.355579 21.637969
     <g id="ytick_9">
      <g id="line2d_24"/>
      <g id="text_17">
-      <text style="font: 10px 'DejaVu Sans'; text-anchor: end" x="194.75375" y="349.034835" transform="rotate(-0 194.75375 349.034835)">AST-oracle masked L19–28 − clean</text>
+      <text style="font: 10px 'DejaVu Sans'; text-anchor: end" x="194.75375" y="349.034835" transform="rotate(-0 194.75375 349.034835)">Program-targeted L19–28 − clean</text>
      </g>
     </g>
     <g id="ytick_10">
      <g id="line2d_25"/>
      <g id="text_18">
-      <text style="font: 10px 'DejaVu Sans'; text-anchor: end" x="194.75375" y="376.458364" transform="rotate(-0 194.75375 376.458364)">AST-oracle masked L23–31 − clean</text>
+      <text style="font: 10px 'DejaVu Sans'; text-anchor: end" x="194.75375" y="376.458364" transform="rotate(-0 194.75375 376.458364)">Program-targeted L23–31 − clean</text>
      </g>
     </g>
    </g>
@@ -506,13 +506,13 @@ z
     <text style="fill: #0072b2; font: 700 9.5px 'DejaVu Sans'; text-anchor: start" x="202.75375" y="124.476204" transform="rotate(-0 202.75375 124.476204)">Archived main math experiment</text>
    </g>
    <g id="text_31">
-    <text style="fill: #e69f00; font: 700 9.5px 'DejaVu Sans'; text-anchor: start" x="202.75375" y="267.078557" transform="rotate(-0 202.75375 267.078557)">High-precision and oracle-targeted follow-ups</text>
+    <text style="fill: #e69f00; font: 700 9.5px 'DejaVu Sans'; text-anchor: start" x="202.75375" y="267.078557" transform="rotate(-0 202.75375 267.078557)">High-precision and program-targeted follow-ups</text>
    </g>
    <g id="text_32">
     <text style="fill: #6b7280; font: 9px 'DejaVu Sans'; text-anchor: start" x="202.75375" y="461.110163" transform="rotate(-0 202.75375 461.110163)">95% paired intervals. Protocols differ; estimates are shown as an evidence map and are not pooled.</text>
    </g>
    <g id="text_33">
-    <text style="font: 700 13px 'DejaVu Sans'; text-anchor: start" x="202.75375" y="15.637969" transform="rotate(-0 202.75375 15.637969)">The raw operator has a large two-hop effect, while tested math effects cluster near zero</text>
+    <text style="font: 700 13px 'DejaVu Sans'; text-anchor: start" x="202.75375" y="15.637969" transform="rotate(-0 202.75375 15.637969)">The audited deletion has a large two-hop effect; tested math effects cluster near zero</text>
    </g>
    <g id="line2d_46">
     <defs>

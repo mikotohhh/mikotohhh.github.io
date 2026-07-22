@@ -115,7 +115,7 @@ z
     <text style="fill: #262626; font: 600 14px 'DejaVu Sans'; text-anchor: start" x="20.571724" y="63.589009" transform="rotate(-0 20.571724 63.589009)">2 + 4 + (8 + (7 − 3))</text>
    </g>
    <g id="text_2">
-    <text style="fill: #262626; font: 10px 'DejaVu Sans'" transform="translate(91.08914 120.667877)">oracle node</text>
+    <text style="fill: #262626; font: 10px 'DejaVu Sans'" transform="translate(91.08914 120.667877)">program node</text>
     <text style="fill: #262626; font: 10px 'DejaVu Sans'" transform="translate(106.82039 131.86569)">2 + 4</text>
    </g>
    <g id="text_3">
@@ -127,12 +127,12 @@ z
     <text style="fill: #262626; font: 10px 'DejaVu Sans'" transform="translate(81.718047 263.68617)">"6", "six", " six"</text>
    </g>
    <g id="text_5">
-    <text style="fill: #262626; font: 10px 'DejaVu Sans'" transform="translate(248.160877 186.578117)">rank-aware raw</text>
+    <text style="fill: #262626; font: 10px 'DejaVu Sans'" transform="translate(248.160877 186.578117)">target-labelled</text>
     <text style="fill: #262626; font: 10px 'DejaVu Sans'" transform="translate(253.28822 197.77593)">span deletion</text>
    </g>
    <g id="text_6">
     <text style="fill: #6b7280; font: 9.5px 'DejaVu Sans'" transform="translate(239.48533 240.646654)">masked / unmasked</text>
-    <text style="fill: #6b7280; font: 9.5px 'DejaVu Sans'" transform="translate(233.99908 251.284576)">+ 3 pointwise controls</text>
+    <text style="fill: #6b7280; font: 9.5px 'DejaVu Sans'" transform="translate(233.99908 251.284576)">+ 3 matched controls</text>
    </g>
    <g id="text_7">
     <text style="fill: #6b7280; font: 9.5px 'DejaVu Sans'" transform="translate(20.571724 298.138784)">The AST identifies the mathematically correct intermediate.</text>
@@ -301,7 +301,7 @@ L 890.496 27.637969
      </g>
     </g>
     <g id="text_18">
-     <text style="font: 10px 'DejaVu Sans'; text-anchor: middle" x="678.899946" y="355.506531" transform="rotate(-0 678.899946 355.506531)">Oracle − clean accuracy (percentage points)</text>
+     <text style="font: 10px 'DejaVu Sans'; text-anchor: middle" x="678.899946" y="355.506531" transform="rotate(-0 678.899946 355.506531)">Program-targeted − clean accuracy (percentage points)</text>
     </g>
    </g>
    <g id="matplotlib.axis_2">
@@ -488,13 +488,13 @@ z
     <text style="fill: #262626; font: 9px 'DejaVu Sans'; text-anchor: end" x="885.206099" y="289.143656" transform="rotate(-0 885.206099 289.143656)">+0.0  [-1.6, +1.6]</text>
    </g>
    <g id="text_27">
-    <text style="fill: #009e73; font: 8.8px 'DejaVu Sans'; text-anchor: start" x="524.170332" y="46.362469" transform="rotate(-0 524.170332 46.362469)">−10 pp practical-loss component of gate</text>
+    <text style="fill: #009e73; font: 8.8px 'DejaVu Sans'; text-anchor: start" x="524.170332" y="46.362469" transform="rotate(-0 524.170332 46.362469)">preregistered −10 pp damage target</text>
    </g>
    <g id="text_28">
     <text style="fill: #6b7280; font: 9px 'DejaVu Sans'; text-anchor: start" x="467.303892" y="387.995122" transform="rotate(-0 467.303892 387.995122)">95% paired cluster-bootstrap intervals; compact visible-scratchpad task.</text>
    </g>
    <g id="text_29">
-    <text style="font: 700 13px 'DejaVu Sans'; text-anchor: start" x="467.303892" y="15.637969" transform="rotate(-0 467.303892 15.637969)">No arithmetic causal-positive-control gate passed</text>
+    <text style="font: 700 13px 'DejaVu Sans'; text-anchor: start" x="467.303892" y="15.637969" transform="rotate(-0 467.303892 15.637969)">Directly targeted arithmetic deletion remained near zero</text>
    </g>
   </g>
  </g>

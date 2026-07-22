@@ -119,20 +119,20 @@ L 734.892326 21.637969
      </g>
     </g>
     <g id="text_6">
-     <text style="font: 10px 'DejaVu Sans'; text-anchor: middle" x="467.398875" y="305.586531" transform="rotate(-0 467.398875 305.586531)">Compensation or specificity contrast (percentage points)</text>
+     <text style="font: 10px 'DejaVu Sans'; text-anchor: middle" x="467.398875" y="305.586531" transform="rotate(-0 467.398875 305.586531)">Protection or specificity contrast (percentage points)</text>
     </g>
    </g>
    <g id="matplotlib.axis_2">
     <g id="ytick_1">
      <g id="line2d_11"/>
      <g id="text_7">
-      <text style="font: 10px 'DejaVu Sans'; text-anchor: end" x="179.606875" y="56.576726" transform="rotate(-0 179.606875 56.576726)">Compensation: J-space</text>
+      <text style="font: 10px 'DejaVu Sans'; text-anchor: end" x="179.606875" y="56.576726" transform="rotate(-0 179.606875 56.576726)">Protection: J-space</text>
      </g>
     </g>
     <g id="ytick_2">
      <g id="line2d_12"/>
      <g id="text_8">
-      <text style="font: 10px 'DejaVu Sans'; text-anchor: end" x="179.606875" y="89.355187" transform="rotate(-0 179.606875 89.355187)">Compensation: pointwise matched</text>
+      <text style="font: 10px 'DejaVu Sans'; text-anchor: end" x="179.606875" y="89.355187" transform="rotate(-0 179.606875 89.355187)">Protection: matched control</text>
      </g>
     </g>
     <g id="ytick_3">
@@ -144,13 +144,13 @@ L 734.892326 21.637969
     <g id="ytick_4">
      <g id="line2d_14"/>
      <g id="text_10">
-      <text style="font: 10px 'DejaVu Sans'; text-anchor: end" x="179.606875" y="194.246264" transform="rotate(-0 179.606875 194.246264)">Compensation: J-space</text>
+      <text style="font: 10px 'DejaVu Sans'; text-anchor: end" x="179.606875" y="194.246264" transform="rotate(-0 179.606875 194.246264)">Protection: J-space</text>
      </g>
     </g>
     <g id="ytick_5">
      <g id="line2d_15"/>
      <g id="text_11">
-      <text style="font: 10px 'DejaVu Sans'; text-anchor: end" x="179.606875" y="227.024726" transform="rotate(-0 179.606875 227.024726)">Compensation: pointwise matched</text>
+      <text style="font: 10px 'DejaVu Sans'; text-anchor: end" x="179.606875" y="227.024726" transform="rotate(-0 179.606875 227.024726)">Protection: matched control</text>
      </g>
     </g>
     <g id="ytick_6">
@@ -293,7 +293,7 @@ z
     <text style="fill: #262626; font: 9px 'DejaVu Sans'; text-anchor: end" x="738.797115" y="192.930483" transform="rotate(-0 738.797115 192.930483)">+4.3  [-3.0, +11.3]</text>
    </g>
    <g id="text_18">
-    <text style="fill: #cc79a7; font: 700 9.5px 'DejaVu Sans'; text-anchor: start" x="187.606875" y="172.418892" transform="rotate(-0 187.606875 172.418892)">Replication, fresh n=300</text>
+    <text style="fill: #cc79a7; font: 700 9.5px 'DejaVu Sans'; text-anchor: start" x="187.606875" y="172.418892" transform="rotate(-0 187.606875 172.418892)">Fresh-bank replication, n=300</text>
    </g>
    <g id="LineCollection_5">
     <path d="M 381.923956 223.225507 
@@ -348,10 +348,10 @@ z
     <text style="fill: #262626; font: 9px 'DejaVu Sans'; text-anchor: end" x="738.797115" y="258.487406" transform="rotate(-0 738.797115 258.487406)">-3.7  [-12.0, +4.0]</text>
    </g>
    <g id="text_21">
-    <text style="fill: #6b7280; font: 9px 'DejaVu Sans'; text-anchor: start" x="187.606875" y="335.282962" transform="rotate(-0 187.606875 335.282962)">Positive specificity means CoT compensates J-space more than matched damage. Both runs use the archived earlier protocol.</text>
+    <text style="fill: #6b7280; font: 9px 'DejaVu Sans'; text-anchor: start" x="187.606875" y="335.282962" transform="rotate(-0 187.606875 335.282962)">Positive specificity means CoT protects J-space more than matched-control damage. Both runs use the earlier protocol.</text>
    </g>
    <g id="text_22">
-    <text style="font: 700 13px 'DejaVu Sans'; text-anchor: start" x="187.606875" y="15.637969" transform="rotate(-0 187.606875 15.637969)">An independent replication overturned the J-specific compensation claim</text>
+    <text style="font: 700 13px 'DejaVu Sans'; text-anchor: start" x="187.606875" y="15.637969" transform="rotate(-0 187.606875 15.637969)">Fresh-bank replication did not support J-specific protection</text>
    </g>
    <g id="line2d_30">
     <defs>
