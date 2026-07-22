@@ -1,5 +1,39 @@
 /* A compact, automatically numbered table of contents for long-form posts. */
 
+/*
+ * Mirror the contents numbers in the J-space article itself. The unique first
+ * heading keeps this opt-in local to that post, so other articles retain their
+ * existing heading style.
+ */
+.post-content:has(> h2#the-transfer-question) {
+    counter-reset: article-section article-subsection;
+}
+
+.post-content:has(> h2#the-transfer-question) > h2 {
+    counter-increment: article-section;
+    counter-set: article-subsection 0;
+}
+
+.post-content:has(> h2#the-transfer-question) > h3 {
+    counter-increment: article-subsection;
+}
+
+.post-content:has(> h2#the-transfer-question) > h2::before,
+.post-content:has(> h2#the-transfer-question) > h3::before {
+    color: var(--secondary);
+    font-variant-numeric: tabular-nums;
+}
+
+.post-content:has(> h2#the-transfer-question) > h2::before {
+    margin-inline-end: 0.45rem;
+    content: counter(article-section) ".";
+}
+
+.post-content:has(> h2#the-transfer-question) > h3::before {
+    margin-inline-end: 0.4rem;
+    content: counter(article-section) "." counter(article-subsection);
+}
+
 details.toc {
     overflow: hidden;
 }
