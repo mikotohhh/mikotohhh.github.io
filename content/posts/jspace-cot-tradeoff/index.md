@@ -73,8 +73,8 @@ audit: when an intervention gives a null result on a new model, how do we tell
 the absence of a mechanism from failure to measure or manipulate it? My final
 conclusion is narrower than the story I started with, but better identified:
 
-> Under a pinned Qwen3-4B, third-party Wikitext J-lens, and paper-raw ablation
-> setup, I found a content-specific causal effect on latent fact chaining but no
+> Under a pinned Qwen3-4B, a third-party Wikitext J-lens, and the paper's raw
+> ablation geometry, I found a content-specific causal effect on latent fact chaining but no
 > detectable J-specific arithmetic effect. This bounds the tested
 > operationalization; it neither refutes the source paper nor shows that
 > mathematics is generally independent of J-space.
@@ -113,17 +113,6 @@ in this post will resolve once it becomes public.)*
   reusable checklist for anyone moving an interpretability instrument to a new
   model.
 
-### Shorthand used below
-
-| Term | Meaning |
-|---|---|
-| paper-raw | The source paper's raw ablation geometry: project hidden states away from the lens's raw token directions |
-| v2 / v3 | The project's second-generation protocol (later archived) / the audited protocol that re-certified the operator and fixed the positive-control battery |
-| wave 1 / wave 2 | The initial two-hop CoT-compensation experiment / its independent 300-item replication |
-| WP16 | The 4,600-item fresh GSM-Symbolic precision experiment |
-| WP17 | The final oracle-targeted arithmetic experiment (384 program-generated items) |
-| L19–28 / L23–31 | The two candidate layer bands: the paper-depth mapping and the original Qwen mapping |
-
 ## Why this matters for AI safety
 
 Mechanistic interpretability aims to support claims about how models work and,
@@ -160,9 +149,8 @@ swaps to localize and alter particular intermediate values.
 Those are related but not identical claims. The benchmark result concerns
 relative robustness under broad ablation; the case studies concern the causal
 role of specific intermediate states. My experiments mainly use deletion—
-projecting hidden states away from the lens's raw token directions, the
-“paper-raw” geometry referenced throughout—not the paper's counterfactual
-coordinate swaps. They also move the method from
+projecting hidden states away from the lens's raw token directions—not the
+paper's counterfactual coordinate swaps. They also move the method from
 Claude to Qwen and use a third-party lens fitted on Wikitext. This is therefore
 a **cross-model stress test and construct audit**, not a literal reproduction of
 every component of the source experiment.
@@ -234,10 +222,11 @@ decisive almost immediately.
 
 *Figure 1. A downstream mechanism claim is interpretable only after its causal
 prerequisites hold. With the same pinned third-party lens and audited raw
-operator, the fixed v3 battery reached a task-specific behavioral effect for
-two-hop recall. Arithmetic target alignment was never established: WP17
-verified exposure and dose, but an AST-defined value does not prove that the
-intended model state changed. The independent archived-v2 replication withdrew
+operator, the fixed positive-control battery reached a task-specific
+behavioral effect for two-hop recall. Arithmetic target alignment was never
+established: the oracle arithmetic experiment verified exposure and dose, but
+a program-defined value does not prove that the
+intended model state changed. The independent replication withdrew
 J-specific CoT compensation, leaving the difficulty interaction unidentified.*
 
 ## The first null did not answer the hypothesis
@@ -299,8 +288,7 @@ where Machu Picchu is located is …"* (→ internally resolve *Peru*, then answ
 *Lima*)—alongside sentiment and extraction tasks that should remain largely
 automatic. After auditing the operator and
 mapping the source paper's depth range onto Qwen, I fixed a 40-item follow-up
-battery—the “v3 battery” referenced in the figures—using the literal
-paper-raw geometry at layers 19–28.
+battery using the paper's literal raw geometry at layers 19–28.
 
 The result was large and selective:
 
@@ -336,17 +324,18 @@ damage under the named treatment relative to its reference. The figure is an
 evidence map across explicitly labeled protocols, not a pooled meta-analysis.
 The two-hop positive control is large and content-specific, whereas the tested
 math effects and their intervals cluster around zero. Intervals use each
-study's registered paired procedure; WP16 clusters by template and has only
-12.1% clean accuracy, while WP17 clusters across 12 balanced strata. Two-hop
-uses automatic top-readout; WP17 uses frozen AST-derived aliases.*
+study's registered paired procedure; the GSM-Symbolic experiment clusters by
+template and has only 12.1% clean accuracy, while the AST-oracle arithmetic
+experiment clusters across 12 balanced strata. Two-hop uses automatic
+top-readout; the oracle rows use frozen program-derived aliases.*
 
 ## The positive result that failed replication
 
 The two-hop task then produced the most attractive result in the project—and
 the most important reason not to stop at an attractive result.
 
-In an earlier 2×2 experiment—run under the project's second-generation
-protocol, archived as “v2” before the v3 audit above—written CoT substantially
+In an earlier 2×2 experiment—run under the project's earlier protocol,
+before the operator audit described above—written CoT substantially
 reduced the loss under J-space ablation. After adding a strict pointwise-matched control, the
 estimated difference between J-space compensation and matched-perturbation
 compensation was **+13.3 points** `[+3.3, +24.0]` across all 150 items. That
@@ -364,7 +353,7 @@ generic matched perturbation compensated as strongly.
 
 The independent replication changed the conclusion:
 
-| Wave-2 estimand, new *n*=300 | Estimate | 95% CI |
+| Replication estimand, new *n*=300 | Estimate | 95% CI |
 |---|---:|---:|
 | Compensation under J-space ablation | +4.3 pp | `[−3.0, +11.3]` |
 | Compensation under pointwise matched perturbation | +8.0 pp | `[+1.3, +14.3]` |
@@ -379,20 +368,20 @@ J-specificity claim was therefore withdrawn.
 
 This does not directly contradict the source paper's GSM8K result: the model,
 task, controls, and protocol differ. It overturns *my* intermediate claim about
-J-specific compensation on this Qwen two-hop setup. The wave-1 and wave-2 2×2
-cells also belong to the archived v2 protocol; the later v3 audit independently
-recertified the raw direct-mode two-hop effect, not every old compensation
-contrast. Keeping those scopes separate is part of the conclusion.
+J-specific compensation on this Qwen two-hop setup. Both the original run and
+the replication used the earlier protocol; the later operator audit
+independently re-certified the raw direct-mode two-hop effect, not every old
+compensation contrast. Keeping those scopes separate is part of the conclusion.
 
 The [replication hypothesis and withdrawal rule](https://github.com/mikotohhh/cs2881r-hw0-jspace/blob/58d0a2f1a253781c4d4d229a988b48fcb987f361/report/HYPOTHESIS.md#addendum-registered-2026-07-17-before-the-wave-2-replication-run)
-and [frozen wave-2 analysis](https://github.com/mikotohhh/cs2881r-hw0-jspace/blob/58d0a2f1a253781c4d4d229a988b48fcb987f361/results/r1/analysis.md)
+and [frozen replication analysis](https://github.com/mikotohhh/cs2881r-hw0-jspace/blob/58d0a2f1a253781c4d4d229a988b48fcb987f361/results/r1/analysis.md)
 are linked here for audit.
 
 [![Forest plot showing the initial two-hop compensation result and its failed independent replication.](replication-forest.svg)](replication-forest.svg)
 
 *Figure 3. Compensation is direct-mode loss minus CoT-mode loss; only the
-J-minus-matched contrast tests J-specific substitution. Both waves use the
-archived v2 two-hop protocol. Wave 1's pointwise-control follow-up was
+J-minus-matched contrast tests J-specific substitution. Both runs use the
+earlier two-hop protocol. The first run's pointwise-control follow-up was
 registered after the J-space compensation result was known. On a fresh
 300-item bank, the specificity estimate reversed direction and
 crossed zero, triggering the registered withdrawal rule. No pooled estimate is
@@ -420,8 +409,7 @@ new numbers. A 400-item experiment produced only 14% clean direct accuracy,
 leaving too little observation window for a useful small-effect estimate. I
 treated that as a failed gate, not as evidence for or against the mechanism.
 
-The precision follow-up—experiment “WP16” in the figures—enumerated 5,000
-items across 100 templates. Because
+The precision follow-up enumerated 5,000 items across 100 templates. Because
 the original 400 had already motivated the experiment, the primary analysis
 used only the **4,600 fresh instances**, resampling templates rather than
 pretending that variants of one template were independent. The result was a
@@ -473,8 +461,8 @@ which the intermediate to target was specified independently of the readout.
 
 ## Bypassing selection with program-defined intermediates
 
-The final experiment—“WP17” in the figures and artifacts—generated 384
-arithmetic expressions from canonical abstract syntax trees (ASTs). Each tree marked one intermediate whose value was
+The final experiment generated 384 arithmetic expressions from canonical
+abstract syntax trees (ASTs). Each tree marked one intermediate whose value was
 consumed by one, two, or three later operations. For example:
 
 ```text
@@ -546,16 +534,16 @@ The correct conclusion is not “Qwen math does not use J-space.” It is:
 > Replacing automatic selection with frozen numeric aliases did not establish
 > an arithmetic causal positive control in this visible-scratchpad task.
 
-WP17 made the null harder to dismiss, but not broader than the instrument it
-tested. The [pre-run protocol snapshot](https://github.com/mikotohhh/cs2881r-hw0-jspace/blob/a21b0decaf5fe4763fbf6b571f24f7eb41bf70b9/report/WP17_ORACLE_ARITHMETIC_PREREG_DRAFT.md),
+This final experiment made the null harder to dismiss, but not broader than
+the instrument it tested. The [pre-run protocol snapshot](https://github.com/mikotohhh/cs2881r-hw0-jspace/blob/a21b0decaf5fe4763fbf6b571f24f7eb41bf70b9/report/WP17_ORACLE_ARITHMETIC_PREREG_DRAFT.md),
 [formal analysis](https://github.com/mikotohhh/cs2881r-hw0-jspace/blob/58d0a2f1a253781c4d4d229a988b48fcb987f361/outputs/wp17/formal/analysis/final.md),
 and [released aggregate generations and manifests](https://github.com/mikotohhh/cs2881r-hw0-jspace/blob/58d0a2f1a253781c4d4d229a988b48fcb987f361/report/WP17_DATA.md)
 are all available.
 
-[![WP17 design schematic and four oracle-minus-clean estimates near zero.](wp17-oracle.svg)](wp17-oracle.svg)
+[![Design schematic of the oracle arithmetic experiment and four oracle-minus-clean estimates near zero.](wp17-oracle.svg)](wp17-oracle.svg)
 
-*Figure 4. WP17 replaced automatic selection with a program-defined
-intermediate and eligible single-token aliases. None of the masked or unmasked
+*Figure 4. The oracle arithmetic experiment replaced automatic selection with
+a program-defined intermediate and eligible single-token aliases. None of the masked or unmasked
 effects approached the preregistered −10-point practical-loss component of the
 causal-positive-control gate; the full gate also required negative clean and
 matched-control intervals. The unmasked family was a triggered diagnostic, not
@@ -567,11 +555,11 @@ directions. The task used a compact visible scratchpad.*
 
 | Claim | Status | Evidence boundary |
 |---|---|---|
-| The paper-raw operator can selectively alter Qwen3-4B behavior | **Supported on latent two-hop recall** | Large clean and matched-control contrasts; sentiment and extraction preserved |
+| The raw ablation operator can selectively alter Qwen3-4B behavior | **Supported on latent two-hop recall** | Large clean and matched-control contrasts; sentiment and extraction preserved |
 | Qwen3-4B reproduces the source GSM8K CoT-protection pattern | **Not reproduced** | Direct and CoT losses were nearly equal with wide overlapping intervals |
 | CoT specifically substitutes for J-space in my two-hop setup | **Withdrawn** | Independent replication found at least as much compensation for pointwise-matched damage |
-| Automatic selection alone explains the arithmetic null | **Insufficient explanation** | Oracle-targeted WP17 bypassed selection and remained near zero |
-| The tested raw numeric directions are necessary for WP17 arithmetic | **Not supported** | Four masked/unmasked estimates tightly surrounded zero |
+| Automatic selection alone explains the arithmetic null | **Insufficient explanation** | The oracle arithmetic experiment bypassed selection and remained near zero |
+| The tested raw numeric directions are necessary for the oracle-task arithmetic | **Not supported** | Four masked/unmasked estimates tightly surrounded zero |
 | Qwen mathematics is generally J-space-independent | **Not established** | No arithmetic construct-validity positive control for this lens |
 | The source paper is refuted | **No** | Models, lenses, tasks, estimands, and causal interventions differ |
 | Bounded interchangeability declines with difficulty | **Not supported** | Its prerequisite J-specific math loss was absent |
@@ -616,15 +604,16 @@ The released pipeline includes:
 - item-, layer-, and stream-keyed random controls that are invariant to batch
   composition and padding;
 - frozen tokenized-prompt hashes and no-overwrite manifests;
-- explicit paper-raw and alternative geometries rather than silent defaults;
+- explicit raw and alternative geometries rather than silent defaults;
 - rank-aware fixed-token deletion with fail-closed exposure and dose checks;
 - triple-wise truncation overlays and immutable resume behavior;
-- paired, stratum-aware bootstrap analyses frozen before formal WP17 output;
-- the full set of aggregate WP17 formal generations and manifests needed to
-  recompute the released analysis.
+- paired, stratum-aware bootstrap analyses frozen before the oracle
+  experiment's formal output;
+- the full set of the oracle experiment's aggregate formal generations and
+  manifests needed to recompute the released analysis.
 
-Not every archived v2 generation is reproducible bit-for-bit from the current
-checkout, and batched fp16 execution was validated behaviorally rather than
+Not every generation from the earlier protocol is reproducible bit-for-bit
+from the current checkout, and batched fp16 execution was validated behaviorally rather than
 claimed byte-identical to sequential execution. The matched controls are
 pointwise norm-matched on their own trajectories, not guaranteed to have equal
 aggregate dose across diverging trajectories. I report those limits because
@@ -657,10 +646,10 @@ compute toward the weakest link in the causal chain.
 - [Repository and reproduction instructions](https://github.com/mikotohhh/cs2881r-hw0-jspace)
 - [Concise course report](https://github.com/mikotohhh/cs2881r-hw0-jspace/blob/58d0a2f1a253781c4d4d229a988b48fcb987f361/report/REPORT.md)
 - [Original preregistration and amendments](https://github.com/mikotohhh/cs2881r-hw0-jspace/blob/58d0a2f1a253781c4d4d229a988b48fcb987f361/report/HYPOTHESIS.md)
-- [Protocol-v3 audit](https://github.com/mikotohhh/cs2881r-hw0-jspace/blob/58d0a2f1a253781c4d4d229a988b48fcb987f361/report/PROTOCOL_V3_AUDIT.md)
+- [Operator protocol audit](https://github.com/mikotohhh/cs2881r-hw0-jspace/blob/58d0a2f1a253781c4d4d229a988b48fcb987f361/report/PROTOCOL_V3_AUDIT.md)
 - [Independent two-hop replication](https://github.com/mikotohhh/cs2881r-hw0-jspace/blob/58d0a2f1a253781c4d4d229a988b48fcb987f361/results/r1/analysis.md)
 - [Fresh 4,600-item GSM-Symbolic analysis](https://github.com/mikotohhh/cs2881r-hw0-jspace/blob/58d0a2f1a253781c4d4d229a988b48fcb987f361/results/p9/analysis_a1.md)
-- [WP17 formal protocol, results, and released data](https://github.com/mikotohhh/cs2881r-hw0-jspace/blob/58d0a2f1a253781c4d4d229a988b48fcb987f361/report/WP17_DATA.md)
+- [Oracle arithmetic experiment: protocol, results, and released data](https://github.com/mikotohhh/cs2881r-hw0-jspace/blob/58d0a2f1a253781c4d4d229a988b48fcb987f361/report/WP17_DATA.md)
 
 ### Role and acknowledgments
 

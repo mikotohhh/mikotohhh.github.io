@@ -202,7 +202,7 @@ z
     <text style="fill: #262626; font: 9px 'DejaVu Sans'; text-anchor: end" x="738.797115" y="55.260945" transform="rotate(-0 738.797115 55.260945)">+17.3  [+8.0, +27.3]</text>
    </g>
    <g id="text_14">
-    <text style="fill: #6b7280; font: 700 9.5px 'DejaVu Sans'; text-anchor: start" x="187.606875" y="34.749353" transform="rotate(-0 187.606875 34.749353)">Wave 1, n=150</text>
+    <text style="fill: #6b7280; font: 700 9.5px 'DejaVu Sans'; text-anchor: start" x="187.606875" y="34.749353" transform="rotate(-0 187.606875 34.749353)">First run, n=150</text>
    </g>
    <g id="LineCollection_2">
     <path d="M 308.13266 85.555969 
@@ -293,7 +293,7 @@ z
     <text style="fill: #262626; font: 9px 'DejaVu Sans'; text-anchor: end" x="738.797115" y="192.930483" transform="rotate(-0 738.797115 192.930483)">+4.3  [-3.0, +11.3]</text>
    </g>
    <g id="text_18">
-    <text style="fill: #cc79a7; font: 700 9.5px 'DejaVu Sans'; text-anchor: start" x="187.606875" y="172.418892" transform="rotate(-0 187.606875 172.418892)">Wave 2, fresh n=300</text>
+    <text style="fill: #cc79a7; font: 700 9.5px 'DejaVu Sans'; text-anchor: start" x="187.606875" y="172.418892" transform="rotate(-0 187.606875 172.418892)">Replication, fresh n=300</text>
    </g>
    <g id="LineCollection_5">
     <path d="M 381.923956 223.225507 

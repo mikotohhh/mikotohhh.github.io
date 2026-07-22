@@ -209,13 +209,13 @@ L 684.355579 21.637969
     <g id="ytick_9">
      <g id="line2d_24"/>
      <g id="text_17">
-      <text style="font: 10px 'DejaVu Sans'; text-anchor: end" x="194.75375" y="349.034835" transform="rotate(-0 194.75375 349.034835)">WP17 masked L19–28: oracle − clean</text>
+      <text style="font: 10px 'DejaVu Sans'; text-anchor: end" x="194.75375" y="349.034835" transform="rotate(-0 194.75375 349.034835)">AST-oracle masked L19–28 − clean</text>
      </g>
     </g>
     <g id="ytick_10">
      <g id="line2d_25"/>
      <g id="text_18">
-      <text style="font: 10px 'DejaVu Sans'; text-anchor: end" x="194.75375" y="376.458364" transform="rotate(-0 194.75375 376.458364)">WP17 masked L23–31: oracle − clean</text>
+      <text style="font: 10px 'DejaVu Sans'; text-anchor: end" x="194.75375" y="376.458364" transform="rotate(-0 194.75375 376.458364)">AST-oracle masked L23–31 − clean</text>
      </g>
     </g>
    </g>
