@@ -12,24 +12,24 @@ In July 2026, Anthropic's interpretability team published [*Verbalizable
 Representations Form a Global Workspace in Language
 Models*](https://transformer-circuits.pub/2026/workspace/index.html). The paper
 makes a striking proposal: language models contain a small, privileged set of
-internal representations that function like a **global workspace**. This is a
+internal representations that function like a *global workspace*. This is a
 functional analogy, not a claim about subjective experience: information in
 the workspace can be reported in words, deliberately manipulated, and reused
 across otherwise different computations.
 
-The authors identify these representations using the **Jacobian lens**, or
+The authors identify these representations using the *Jacobian lens*, or
 J-lens. Roughly, the lens associates directions in a model's hidden activations
 with vocabulary-level concepts according to their average effect on later
 verbal output. Sparse combinations of the corresponding token-indexed
-directions define what the paper calls **J-space**: a changing set of concepts
+directions define what the paper calls *J-space*: a changing set of concepts
 the model can hold and reason with even when it has not written them down.
 
 A concrete example makes the intervention easier to picture. Ask a model:
 *"The capital of the country where the Eiffel Tower stands is …"* Answering
 in one step requires an intermediate fact that never appears in the text:
-**France**. The J-lens is built to detect exactly this kind of
+*France*. The J-lens is built to detect exactly this kind of
 verbalizable-but-unwritten content—at some position it might report the
-concept for the token "France" as strongly active. J-space **ablation** then
+concept for the token "France" as strongly active. J-space *ablation* then
 deletes that content: at every generated token, it takes the ten concepts the
 lens reads out most strongly (excluding the words the model is about to write
 anyway) and removes the corresponding directions from the model's hidden
@@ -49,7 +49,7 @@ transfer to Qwen3-4B when the intervention uses a third-party J-lens fitted on
 Wikitext? Second, if it does, where does the substitution stop? Written
 reasoning can preserve the result of a completed step, but the model must still
 decide what step to take next. I therefore preregistered the second question as
-a stricter hypothesis—**bounded interchangeability**: as mathematical problems
+a stricter hypothesis—*bounded interchangeability*: as mathematical problems
 require harder step selection, chain of thought should become less able to
 protect performance from J-space ablation.
 
@@ -153,7 +153,7 @@ role of specific intermediate states. My experiments mainly use deletion—
 projecting hidden states away from the lens's raw token directions—not the
 paper's counterfactual coordinate swaps. They also move the method from
 Claude to Qwen and use a third-party lens fitted on Wikitext. This is therefore
-a **cross-model stress test and construct audit**, not a literal reproduction of
+a *cross-model stress test and construct audit*, not a literal reproduction of
 every component of the source experiment.
 
 Two scope decisions deserve a sentence each, because a careful reader will
@@ -171,7 +171,7 @@ list rather than another benchmark sweep.
 | Broad intervention | Top-10 J-space ablation | The paper's raw top-10 deletion with random, early, and matched controls |
 | Arithmetic causal test | Curated patching and coordinate-swap cases | Program-scale deletion of specified numeric token directions |
 
-I proposed a stricter extension: **bounded interchangeability**. CoT can
+I proposed a stricter extension: *bounded interchangeability*. CoT can
 externalize the storage of an intermediate result, but the model must still
 choose the next step internally. As problems become harder, that step-selection
 computation may itself exceed the degraded workspace's capacity. If so, CoT's
@@ -205,7 +205,7 @@ $$
 $$
 
 The registered direct-minus-CoT contrast is $\Delta_D - \Delta_T$ (*D* for
-direct answering, *T* for the written-text CoT mode): **negative**
+direct answering, *T* for the written-text CoT mode): *negative*
 values mean that CoT loses less accuracy under ablation. Random directions, early-layer
 interventions, and same-geometry matched perturbations tested whether any loss
 was specific to selected J-space content rather than generic damage.
@@ -256,8 +256,11 @@ interpretable when one arm is at floor.
 
 The preregistered MATH interaction pointed opposite my hypothesis: the fitted
 ablation-by-level coefficient was positive, $\beta=0.543$
-`[0.063, 1.022]`, with an unadjusted $p=.0265$. It would have been tempting to
-announce a reversed gradient. I did not. The confirmatory threshold was .025,
+`[0.063, 1.022]`, with an unadjusted $p=.0265$.
+
+It would have been tempting to announce a reversed gradient. I did not.
+
+The confirmatory threshold was .025,
 and the raw effects across levels 1–5 were −2.5, −12.5, 0.0, −7.5, and 0.0
 points—plainly non-monotonic. Levels 1 and 2 also began at 100% clean accuracy.
 The coefficient is weak evidence against the predicted direction, not evidence
@@ -279,6 +282,10 @@ the null:
 
 The remaining experiments were designed to separate these possibilities,
 rather than repeatedly search for a significant math result.
+
+> **Takeaway:** The math null was real but unidentified—ablation never
+> produced J-specific damage on math for CoT to protect against. The next
+> step was to test the instrument, not to rerun the sweep.
 
 ## Can the intervention cause a content-specific effect at all?
 
@@ -312,8 +319,8 @@ microscope that resolves one tissue is not automatically calibrated for
 another. The fixed battery also followed an exploratory smoke test; I describe
 it as a fixed formal follow-up, not as a blinded preregistration.
 
-In short: the intervention could bite. Whether it would bite arithmetic was
-now the question.
+> **Takeaway:** The intervention could bite—selectively, and only at the task
+> it was aimed at. Whether it would bite arithmetic was now the question.
 
 The full operator battery and dose measurements are
 [available here](https://github.com/mikotohhh/cs2881r-hw0-jspace/blob/58d0a2f1a253781c4d4d229a988b48fcb987f361/results/v3_validation/operator_battery/results_v2.md).
@@ -361,11 +368,12 @@ The independent replication changed the conclusion:
 | J-space − matched compensation | **−3.7 pp** | `[−12.0, +4.0]` |
 
 CoT still appeared to make the direct mode less fragile—but it did so at least
-as strongly for the generic matched intervention. The preregistered
-J-specificity claim was therefore withdrawn.
+as strongly for the generic matched intervention.
 
-> The replication did exactly what a good replication should do: it changed my
-> mind.
+The preregistered J-specificity claim was therefore withdrawn.
+
+*The replication did exactly what a good replication should do: it changed my
+mind.*
 
 This does not directly contradict the source paper's GSM8K result: the model,
 task, controls, and protocol differ. It overturns *my* intermediate claim about
@@ -373,6 +381,10 @@ J-specific compensation on this Qwen two-hop setup. Both the original run and
 the replication used the earlier protocol; the later operator audit
 independently re-certified the raw direct-mode two-hop effect, not every old
 compensation contrast. Keeping those scopes separate is part of the conclusion.
+
+> **Takeaway:** The project's most attractive mechanism result did not
+> survive an independent replication whose withdrawal rule was frozen before
+> the run. CoT's protection was generic, not J-specific.
 
 The [replication hypothesis and withdrawal rule](https://github.com/mikotohhh/cs2881r-hw0-jspace/blob/58d0a2f1a253781c4d4d229a988b48fcb987f361/report/HYPOTHESIS.md#addendum-registered-2026-07-17-before-the-wave-2-replication-run)
 and [frozen replication analysis](https://github.com/mikotohhh/cs2881r-hw0-jspace/blob/58d0a2f1a253781c4d4d229a988b48fcb987f361/results/r1/analysis.md)
@@ -460,6 +472,10 @@ been calibrated as a necessary condition even on multihop. The useful next
 experiment was not another larger selector-based benchmark. It was a task in
 which the intermediate to target was specified independently of the readout.
 
+> **Takeaway:** Heavier doses, fresh problems, and 4,600-item precision all
+> sharpened the arithmetic null without explaining it. The one suspect left
+> standing was target selection itself.
+
 ## Bypassing selection with program-defined intermediates
 
 The final experiment generated 384 arithmetic expressions from canonical
@@ -477,7 +493,7 @@ final answer: 18
 
 Instead of allowing the automatic top-readout to choose directions, the
 intervention removed the rank-aware span of the eligible token directions for
-the AST-defined value. This **oracle** is semantic: it knows the program's true
+the AST-defined value. This *oracle* is semantic: it knows the program's true
 intermediate. It is not an oracle for the model's hidden representation.
 
 The design crossed:
@@ -511,9 +527,11 @@ the automatic selector was the only problem: bypassing it did not reveal the
 expected effect.
 
 But the experiment has an equally important limit. To obtain a high clean
-competence rate, it used a **compact visible scratchpad**, unlike the
+competence rate, it used a *compact visible scratchpad*, unlike the
 forced-direct GSM-Symbolic experiment. The model could externalize or
-recompute the targeted value. More fundamentally, specifying the correct AST
+recompute the targeted value.
+
+More fundamentally, specifying the correct AST
 node does not demonstrate that Qwen encoded that value in the corresponding
 raw token directions. The source paper's arithmetic cases first established
 activity and used contextual patching or counterfactual swaps; this experiment
@@ -530,13 +548,14 @@ suggest. It cannot tell apart:
 4. the chosen layer bands miss the causal state; or
 5. the visible scratchpad routes around an otherwise internal dependency.
 
-The correct conclusion is not “Qwen math does not use J-space.” It is:
+The correct conclusion is not “Qwen math does not use J-space.”
 
-> Replacing automatic selection with frozen numeric aliases did not establish
-> an arithmetic causal positive control in this visible-scratchpad task.
+> **Takeaway:** Replacing automatic selection with program-defined targets
+> still produced no arithmetic effect—a null that is harder to dismiss, but
+> no broader than the instrument it tested. It did not establish an
+> arithmetic causal positive control in this visible-scratchpad task.
 
-This final experiment made the null harder to dismiss, but not broader than
-the instrument it tested. The [pre-run protocol snapshot](https://github.com/mikotohhh/cs2881r-hw0-jspace/blob/a21b0decaf5fe4763fbf6b571f24f7eb41bf70b9/report/WP17_ORACLE_ARITHMETIC_PREREG_DRAFT.md),
+The [pre-run protocol snapshot](https://github.com/mikotohhh/cs2881r-hw0-jspace/blob/a21b0decaf5fe4763fbf6b571f24f7eb41bf70b9/report/WP17_ORACLE_ARITHMETIC_PREREG_DRAFT.md),
 [formal analysis](https://github.com/mikotohhh/cs2881r-hw0-jspace/blob/58d0a2f1a253781c4d4d229a988b48fcb987f361/outputs/wp17/formal/analysis/final.md),
 and [released aggregate generations and manifests](https://github.com/mikotohhh/cs2881r-hw0-jspace/blob/58d0a2f1a253781c4d4d229a988b48fcb987f361/report/WP17_DATA.md)
 are all available.
