@@ -85,8 +85,9 @@ of preregistered replications, positive controls, protocol audits, and
 construct-validity tests. The [code, frozen analyses, formal experiment
 outputs, and manifests are collected in the project
 repository](https://github.com/mikotohhh/cs2881r-hw0-jspace). *(The repository
-is private until the course deadline in early August 2026; the artifact links
-in this post will resolve once it becomes public.)*
+is currently private, so the artifact links in this post will not resolve for
+outside readers; they are kept for provenance, and access is available on
+request.)*
 
 ## The result in thirty seconds
 
