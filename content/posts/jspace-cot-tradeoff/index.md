@@ -24,6 +24,18 @@ verbal output. Sparse combinations of the corresponding token-indexed
 directions define what the paper calls **J-space**: a changing set of concepts
 the model can hold and reason with even when it has not written them down.
 
+A concrete example makes the intervention easier to picture. Ask a model:
+*"The capital of the country where the Eiffel Tower stands is …"* Answering
+in one step requires an intermediate fact that never appears in the text:
+**France**. The J-lens is built to detect exactly this kind of
+verbalizable-but-unwritten content—at some position it might report the
+concept for the token "France" as strongly active. J-space **ablation** then
+deletes that content: at every generated token, it takes the ten concepts the
+lens reads out most strongly (excluding the words the model is about to write
+anyway) and removes the corresponding directions from the model's hidden
+state across a band of layers. If the model was internally "holding"
+*France*, it no longer is.
+
 One of the paper's experiments suggests a concrete relationship between this
 hidden workspace and visible chain-of-thought reasoning. Ablating J-space hurt
 Claude Sonnet 4.5 much more when it answered GSM8K problems directly than when
@@ -95,6 +107,22 @@ in this post will resolve once it becomes public.)*
   arithmetic experiment then bypassed the automatic selector and again found
   effects near zero—but still did not prove that the targeted raw token
   directions were valid internal arithmetic states.
+- **The transferable output is a method, not the null.** The
+  causal-identification ladder in Figure 1—competence gate, exposure and dose
+  checks, content-specific positive control, target-alignment test—is a
+  reusable checklist for anyone moving an interpretability instrument to a new
+  model.
+
+### Shorthand used below
+
+| Term | Meaning |
+|---|---|
+| paper-raw | The source paper's raw ablation geometry: project hidden states away from the lens's raw token directions |
+| v2 / v3 | The project's second-generation protocol (later archived) / the audited protocol that re-certified the operator and fixed the positive-control battery |
+| wave 1 / wave 2 | The initial two-hop CoT-compensation experiment / its independent 300-item replication |
+| WP16 | The 4,600-item fresh GSM-Symbolic precision experiment |
+| WP17 | The final oracle-targeted arithmetic experiment (384 program-generated items) |
+| L19–28 / L23–31 | The two candidate layer bands: the paper-depth mapping and the original Qwen mapping |
 
 ## Why this matters for AI safety
 
@@ -138,6 +166,13 @@ coordinate swaps. They also move the method from
 Claude to Qwen and use a third-party lens fitted on Wikitext. This is therefore
 a **cross-model stress test and construct audit**, not a literal reproduction of
 every component of the source experiment.
+
+Two scope decisions deserve a sentence each, because a careful reader will
+ask. Qwen3-4B and the three math datasets were fixed by the course
+assignment. And although the third-party Wikitext lens is the most suspect
+link in the causal chain, refitting a lens was outside this phase's time and
+compute budget—which is exactly why an independent refit leads the next-steps
+list rather than another benchmark sweep.
 
 | Dimension | Source paper | This project |
 |---|---|---|
@@ -258,8 +293,11 @@ rather than repeatedly search for a significant math result.
 ## Can the intervention cause a content-specific effect at all?
 
 The first priority was a behavioral positive control. I used two-hop questions
-that require combining two latent facts, alongside sentiment and extraction
-tasks that should remain largely automatic. After auditing the operator and
+that require combining two latent facts—the introduction's Eiffel Tower
+question is the template; another bank item is *"The capital of the country
+where Machu Picchu is located is …"* (→ internally resolve *Peru*, then answer
+*Lima*)—alongside sentiment and extraction tasks that should remain largely
+automatic. After auditing the operator and
 mapping the source paper's depth range onto Qwen, I fixed a 40-item follow-up
 battery—the “v3 battery” referenced in the figures—using the literal
 paper-raw geometry at layers 19–28.
@@ -272,7 +310,8 @@ The result was large and selective:
 | J-space ablation − mean of 3 matched controls | **−23.3 pp** | `[−35.8, −11.7]` |
 
 All sentiment and extraction items remained correct under the primary raw
-intervention. The matched controls removed more residual norm on their own
+intervention. Forty items buy limited precision—the intervals are wide—but
+even their conservative ends are double-digit losses. The matched controls removed more residual norm on their own
 trajectories, on average, yet did substantially less damage to two-hop recall.
 This makes generic perturbation magnitude an implausible complete explanation
 for the two-hop effect.
@@ -354,8 +393,8 @@ are linked here for audit.
 *Figure 3. Compensation is direct-mode loss minus CoT-mode loss; only the
 J-minus-matched contrast tests J-specific substitution. Both waves use the
 archived v2 two-hop protocol. Wave 1's pointwise-control follow-up was
-registered after the J-space compensation result was known. On a fresh,
-preregistered 300-item bank, the specificity estimate reversed direction and
+registered after the J-space compensation result was known. On a fresh
+300-item bank, the specificity estimate reversed direction and
 crossed zero, triggering the registered withdrawal rule. No pooled estimate is
 shown.*
 
@@ -367,7 +406,7 @@ the missing effect.
 
 ### Was the intervention simply too weak?
 
-A registered dose ladder expanded the ablation from the main layer band to a
+A dose ladder expanded the ablation from the main layer band to a
 heavier L15–32 band. Two-hop damage increased, so the recipe was capable of
 becoming more disruptive. GSM8K J-space accuracy fell by 5.7 points—but its
 matched control fell by 12.2 points. The content-specific contrast therefore
@@ -386,18 +425,19 @@ items across 100 templates. Because
 the original 400 had already motivated the experiment, the primary analysis
 used only the **4,600 fresh instances**, resampling templates rather than
 pretending that variants of one template were independent. The result was a
-tight operational null:
+tight operational null—with the key caveat stated up front rather than after
+the table: the clean model itself solved only **12.1%** of fresh items, so
+this bound applies to a task the model mostly fails:
 
 | Fresh GSM-Symbolic, *n*=4,600 | Estimate | 95% cluster CI |
 |---|---:|---:|
 | J-space ablation − clean | **−0.52 pp** | `[−1.65, +0.59]` |
 | J-space ablation − matched | **+0.26 pp** | `[−0.96, +1.46]` |
 
-Both intervals fell inside the preregistered ±2-point equivalence margin. This
+Both intervals fell inside the ±2-point equivalence margin. This
 rules out a large absolute effect for this exact direct-answer protocol. It does
-not rule out the source paper's result: clean accuracy was only 12.1%, the
-relative-retention interval still overlapped the paper's medium direct band,
-and the experiment had no CoT arm.
+not rule out the source paper's result: the relative-retention interval still
+overlapped the paper's medium direct band, and the experiment had no CoT arm.
 
 #### A false positive prevented by the generation protocol
 
@@ -456,8 +496,9 @@ The design crossed:
 - four arithmetic operations and three causal-hop depths, for 12 equally
   weighted strata;
 - the paper-depth band L19–28 and the original Qwen mapping L23–31;
-- a masked family that preserved the clean top-10 output-token directions and
-  a preregistered unmasked diagnostic;
+- a masked family that preserved the clean top-10 output-token directions,
+  plus an unmasked diagnostic to be triggered only if the masked family
+  failed its gate;
 - three same-geometry, pointwise-matched seeds per band;
 - a 50,000-sample paired cluster bootstrap and an intention-to-treat analysis.
 
@@ -597,7 +638,7 @@ mechanism*. The evidence does not support that sentence.
 
 What it supports is more useful. The same operational setup can causally and
 selectively disrupt latent fact chaining, while several increasingly targeted
-arithmetic experiments remain near zero. A preregistered independent
+arithmetic experiments remain near zero. An independent
 replication also showed that an apparent CoT-specific compensation effect was
 generic to matched perturbations. Together, these results locate the current
 bottleneck at arithmetic construct validity and cross-model instrument
