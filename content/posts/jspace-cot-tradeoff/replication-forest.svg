@@ -293,7 +293,7 @@ z
     <text style="fill: #262626; font: 9px 'DejaVu Sans'; text-anchor: end" x="738.797115" y="192.930483" transform="rotate(-0 738.797115 192.930483)">+4.3  [-3.0, +11.3]</text>
    </g>
    <g id="text_18">
-    <text style="fill: #cc79a7; font: 700 9.5px 'DejaVu Sans'; text-anchor: start" x="187.606875" y="172.418892" transform="rotate(-0 187.606875 172.418892)">Fresh-bank replication, n=300</text>
+    <text style="fill: #cc79a7; font: 700 9.5px 'DejaVu Sans'; text-anchor: start" x="187.606875" y="172.418892" transform="rotate(-0 187.606875 172.418892)">Replication on new questions, n=300</text>
    </g>
    <g id="LineCollection_5">
     <path d="M 381.923956 223.225507 
@@ -351,7 +351,7 @@ z
     <text style="fill: #6b7280; font: 9px 'DejaVu Sans'; text-anchor: start" x="187.606875" y="335.282962" transform="rotate(-0 187.606875 335.282962)">Positive specificity means CoT protects J-space more than matched-control damage. Both runs use the earlier protocol.</text>
    </g>
    <g id="text_22">
-    <text style="font: 700 13px 'DejaVu Sans'; text-anchor: start" x="187.606875" y="15.637969" transform="rotate(-0 187.606875 15.637969)">Fresh-bank replication did not support J-specific protection</text>
+    <text style="font: 700 13px 'DejaVu Sans'; text-anchor: start" x="187.606875" y="15.637969" transform="rotate(-0 187.606875 15.637969)">Replication on 300 new questions did not support J-specific protection</text>
    </g>
    <g id="line2d_30">
     <defs>

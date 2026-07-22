@@ -385,7 +385,7 @@ L 662.790062 248.624286
     <text style="fill: #0072b2; font: 700 14px 'DejaVu Sans'; text-anchor: start" x="54.534063" y="52.917295" transform="rotate(-0 54.534063 52.917295)">A</text>
    </g>
    <g id="text_21">
-    <text style="fill: #262626; font: 700 13.3px 'DejaVu Sans'; text-anchor: start" x="75.823023" y="53.062873" transform="rotate(-0 75.823023 53.062873)">One post-exclusion selector trace</text>
+    <text style="fill: #262626; font: 700 13.3px 'DejaVu Sans'; text-anchor: start" x="75.823023" y="53.062873" transform="rotate(-0 75.823023 53.062873)">Example rankings after excluding likely next tokens</text>
    </g>
    <g id="text_22">
     <text style="fill: #667085; font: 700 9.4px 'DejaVu Sans'; text-anchor: start" x="54.534063" y="63.692237" transform="rotate(-0 54.534063 63.692237)">ITEM 14  ·  THIRD PLANET FROM SUN → EARTH → 1 MOON  ·  LOWER RANK IS STRONGER</text>
@@ -634,13 +634,13 @@ z
    </g>
   </g>
   <g id="text_41">
-   <text style="fill: #262626; font: 700 17px 'DejaVu Sans'; text-anchor: start" x="54.534063" y="18.677344" transform="rotate(-0 54.534063 18.677344)">The selector surfaced arithmetic intermediates less often</text>
+   <text style="fill: #262626; font: 700 17px 'DejaVu Sans'; text-anchor: start" x="54.534063" y="18.677344" transform="rotate(-0 54.534063 18.677344)">The selector found arithmetic intermediates less often</text>
   </g>
   <g id="text_42">
-   <text style="fill: #667085; font: 10.7px 'DejaVu Sans'; text-anchor: start" x="54.534063" y="39.630328" transform="rotate(-0 54.534063 39.630328)">Separate rank-only banks; this is a descriptive measurement audit, not a behavioral effect.</text>
+   <text style="fill: #667085; font: 10.7px 'DejaVu Sans'; text-anchor: start" x="54.534063" y="39.630328" transform="rotate(-0 54.534063 39.630328)">Two question sets used only to measure rankings; these results are descriptive.</text>
   </g>
   <g id="text_43">
-   <text style="fill: #667085; font: 9.2px 'DejaVu Sans'; text-anchor: start" x="54.534063" y="472.314688" transform="rotate(-0 54.534063 472.314688)">Hit = an eligible alias reached the post-exclusion top 10 at the final prompt position, in any band layer; all items stay in the denominator.</text>
+   <text style="fill: #667085; font: 9.2px 'DejaVu Sans'; text-anchor: start" x="54.534063" y="472.314688" transform="rotate(-0 54.534063 472.314688)">Hit = an eligible name reached the top 10 after likely next tokens were excluded, at the final prompt position in any layer.</text>
   </g>
  </g>
  <defs>

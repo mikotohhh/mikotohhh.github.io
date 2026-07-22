@@ -119,20 +119,20 @@ z
     <text style="fill: #262626; font: 10px 'DejaVu Sans'" transform="translate(106.82039 131.86569)">2 + 4</text>
    </g>
    <g id="text_3">
-    <text style="fill: #262626; font: 10px 'DejaVu Sans'" transform="translate(82.421172 186.578117)">semantic value</text>
+    <text style="fill: #262626; font: 10px 'DejaVu Sans'" transform="translate(79.421172 186.578117)">intermediate value</text>
     <text style="fill: #262626; font: 10px 'DejaVu Sans'" transform="translate(117.369609 197.77593)">6</text>
    </g>
    <g id="text_4">
-    <text style="fill: #262626; font: 10px 'DejaVu Sans'" transform="translate(71.184453 252.488357)">single-token aliases</text>
+    <text style="fill: #262626; font: 10px 'DejaVu Sans'" transform="translate(68.184453 252.488357)">one-token spellings</text>
     <text style="fill: #262626; font: 10px 'DejaVu Sans'" transform="translate(81.718047 263.68617)">"6", "six", " six"</text>
    </g>
    <g id="text_5">
-    <text style="fill: #262626; font: 10px 'DejaVu Sans'" transform="translate(248.160877 186.578117)">target-labelled</text>
-    <text style="fill: #262626; font: 10px 'DejaVu Sans'" transform="translate(253.28822 197.77593)">span deletion</text>
+    <text style="fill: #262626; font: 10px 'DejaVu Sans'" transform="translate(244.160877 186.578117)">delete directions</text>
+    <text style="fill: #262626; font: 10px 'DejaVu Sans'" transform="translate(244.28822 197.77593)">labelled with 6</text>
    </g>
    <g id="text_6">
-    <text style="fill: #6b7280; font: 9.5px 'DejaVu Sans'" transform="translate(239.48533 240.646654)">masked / unmasked</text>
-    <text style="fill: #6b7280; font: 9.5px 'DejaVu Sans'" transform="translate(233.99908 251.284576)">+ 3 matched controls</text>
+    <text style="fill: #6b7280; font: 9.5px 'DejaVu Sans'" transform="translate(235.48533 240.646654)">primary / aggressive</text>
+    <text style="fill: #6b7280; font: 9.5px 'DejaVu Sans'" transform="translate(225.99908 251.284576)">+ 3 matched random controls</text>
    </g>
    <g id="text_7">
     <text style="fill: #6b7280; font: 9.5px 'DejaVu Sans'" transform="translate(20.571724 298.138784)">The AST identifies the mathematically correct intermediate.</text>
@@ -494,7 +494,7 @@ z
     <text style="fill: #6b7280; font: 9px 'DejaVu Sans'; text-anchor: start" x="467.303892" y="387.995122" transform="rotate(-0 467.303892 387.995122)">95% paired cluster-bootstrap intervals; compact visible-scratchpad task.</text>
    </g>
    <g id="text_29">
-    <text style="font: 700 13px 'DejaVu Sans'; text-anchor: start" x="467.303892" y="15.637969" transform="rotate(-0 467.303892 15.637969)">Directly targeted arithmetic deletion remained near zero</text>
+    <text style="font: 700 13px 'DejaVu Sans'; text-anchor: start" x="467.303892" y="15.637969" transform="rotate(-0 467.303892 15.637969)">Targeted number deletion produced no detectable accuracy loss</text>
    </g>
   </g>
  </g>

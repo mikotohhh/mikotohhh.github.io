@@ -5,7 +5,7 @@ author: "Luozhong Zhou"
 tags: ["AI safety", "mechanistic interpretability", "chain-of-thought", "causal interventions", "experiments"]
 math: true
 draft: false
-summary: "I tested whether Anthropic's direct-versus-explicit-CoT robustness pattern transfers to Qwen3-4B. It did not appear; a two-hop positive control worked on a reused validation bank, while arithmetic targeting remained unvalidated."
+summary: "I tested whether Anthropic's finding—that written reasoning protects a model from J-space interventions—also holds for Qwen3-4B. I did not reproduce the math result, and follow-up experiments showed why that null result remains inconclusive."
 ---
 
 ## The transfer question
@@ -15,19 +15,19 @@ summary: "I tested whether Anthropic's direct-versus-explicit-CoT robustness pat
 In July 2026, Anthropic's interpretability team published [*Verbalizable
 Representations Form a Global Workspace in Language
 Models*](https://transformer-circuits.pub/2026/workspace/index.html). The paper
-argues that language models maintain a small, privileged set of internal
-representations that work like a *global workspace*. This is a functional
-analogy, not a claim about subjective experience. Information in the workspace
-can be put into words, deliberately manipulated, and reused by otherwise
-different computations.
+argues that a small, privileged set of internal representations in a language
+model forms something like a *global workspace*. Anthropic uses that term
+in a functional sense: information in this workspace can be put into words,
+deliberately manipulated, and reused by otherwise different computations. The
+claim does not depend on the model having subjective experience.
 
 The authors locate this workspace with a *Jacobian lens*, or J-lens. A model's
-hidden state is a long vector, not a sentence. The lens turns part of that
-vector into a ranked list of words: it might say that the hidden state is most
-strongly associated with *France*, *country*, and *Paris*. These token-labelled
-directions act as coordinates; sparse combinations of them form the paper's
-*J-space*. The coordinates are fixed by the fitted lens, while their loadings
-change with context.
+hidden state is a long vector. The lens makes part of it easier to inspect by
+producing a ranked list of associated words, perhaps *France*, *country*, and
+*Paris*. Each word labels a direction in the model's activation space. The
+paper calls sparse combinations of these directions *J-space*. The fitted lens
+fixes the directions; the model's current context determines how strongly each
+one is present.
 
 Consider the question:
 
@@ -35,12 +35,18 @@ Consider the question:
 
 The answer is *Paris*, but a one-line answer still requires the unstated
 intermediate fact *France*. If the lens reports *France* while the model is
-solving the question, we can project the hidden state away from the
-*France*-labelled direction and ask whether the final answer changes. That is
-the intuition, not a literal description of the main selector: I did not
-hand-pick *France*. At each processed position and layer, the broad
-intervention automatically removed the ten strongest eligible directions
-ranked by the lens, then continued the forward pass.
+solving the question, we can remove the component of the hidden state that
+points in the *France*-labelled direction and see whether the final answer
+changes. This example gives the intuition. In my main intervention, I did not
+hand-pick *France*: at every processed token and layer, the lens selected the
+ten strongest eligible directions, removed them, and let the model continue.
+
+Two distinctions matter for everything that follows. First, each direction is
+labelled with a vocabulary token through the lens construction. The training
+data are used to fit the lens, but the label alone does not show that Qwen used
+that direction in this particular computation. It may carry *France* or *6*
+some other way. Second, the intervention edits activations during inference;
+the model's weights stay fixed.
 
 Anthropic found that broad J-space deletion hurt Claude Sonnet 4.5 much more
 when it answered GSM8K math problems directly than when it wrote out
@@ -58,25 +64,25 @@ WikiText to predict Qwen's final-layer state. I also preregistered a harder
 prediction: if written steps replace only storage, their protection should
 weaken when the model must choose increasingly difficult next operations.
 
-I did **not** find the predicted math result. But the reason matters.
+I did **not** reproduce the predicted math result. I then used two-hop factual
+questions as a simpler check: each question requires one unstated intermediate
+fact, such as *France* in the Eiffel Tower example. On a reused set of 40 such
+questions, J-space deletion caused more damage than random activation changes
+matched to its local removal size. However, a separate experiment on 300 new
+questions overturned my early claim that written chain-of-thought reasoning
+(CoT) specifically compensated for J-space damage. Most importantly, none of
+the arithmetic experiments verified that the lens had found the representation
+Qwen was actually using for arithmetic.
 
-> With this Qwen model and lens, deleting J-space directions selectively reduced
-> accuracy on a fixed, reused 40-question bank requiring unstated two-hop facts.
-> None of the arithmetic procedures established that their targeted lens
-> directions reached a causal arithmetic state. And when an early two-hop
-> experiment made written
-> chain-of-thought reasoning (CoT) look uniquely protective, that result did not
-> survive a fresh 300-question two-hop replication.
+The arithmetic results apply only to this model, this lens, and these
+interventions. They leave open whether Qwen uses an internal workspace for
+mathematics, and they do not refute Anthropic's result on Claude.
 
-The arithmetic results therefore describe this model and lens under the tested
-family of procedures. They do not show that Qwen performs mathematics without
-an internal workspace, and they do not refute Anthropic's result on Claude.
-
-This is the central lesson: **a null result from an interpretability tool can
-mean that the mechanism is absent, that the task routed around it, or that the
-tool failed to identify or reach it.** More samples distinguish small effects
-from large ones under one procedure; they do not distinguish those
-explanations.
+The central problem is that **a near-zero result from an interpretability tool
+has several possible causes**. The mechanism may be absent; the task may avoid
+using it; or the tool may fail to find and change it. A larger sample can place
+a tighter bound on the effect of one intervention, but it cannot tell these
+explanations apart.
 
 ### Why transfer matters for AI safety
 
@@ -87,14 +93,14 @@ at everything, creating the appearance that a particular internal concept was
 causal when the model was merely damaged.
 
 This project does not directly measure chain-of-thought faithfulness or
-deception. Its safety relevance is methodological: before trusting an internal
-monitor or causal intervention, we need evidence that it recognizes the target
-state, changes that state, and does more than cause generic degradation.
+deception. Its safety relevance is methodological. Before trusting an internal
+monitor or causal intervention, we need evidence that it recognizes the
+target state, changes that state, and avoids simply degrading the model.
 
-That conclusion depends on what counts as successful transfer. A score drop
-under J-space deletion is not enough: the experiment must distinguish damage
-to selected content from generic sensitivity to perturbation, and broad
-deletion from a targeted change to a localized arithmetic state.
+This sets a high bar for a successful transfer. A score drop under J-space
+deletion could reflect generic sensitivity to perturbation. We need controls
+to isolate damage caused by the selected content. We also need to distinguish
+broad deletion from a targeted change to a particular arithmetic state.
 
 ## What would count as evidence for causal transfer?
 
@@ -130,13 +136,12 @@ state.
 | Main comparison | Score retained relative to clean | Paired accuracy change under direct and written answers |
 | Broad intervention | Delete the ten strongest J-space contents | The same broad top-*k* deletion family, plus generic controls of comparable size |
 | Targeted arithmetic test | Curated activation patches and coordinate swaps | Large-scale deletion of directions labelled with known intermediate values |
-| Answer elicitation | GSM8K without versus with an explicit written scratchpad | Forced-direct assistant prefill versus a separate concise-CoT prompt contract |
+| Answer elicitation | GSM8K without versus with an explicit written scratchpad | A forced-direct answer format versus a separate prompt asking for concise written reasoning |
 
-This was not a literal reproduction of every part of Anthropic's experiment.
-The model changed from Claude to Qwen, the fitted lens came from a third party,
-and the targeted intervention was deletion rather than a swap. It was a test
-of whether the broad direct-versus-written relationship survived those
-changes.
+Several important details differed from Anthropic's experiment. I used Qwen
+instead of Claude, a third-party fitted lens, and deletion in place of the
+paper's targeted swaps. The experiment tested whether the broad contrast
+between direct and written answers survived those changes.
 
 The lens transfer was the most uncertain link. The public artifact was fitted
 on general WikiText and trained to predict Qwen's final-layer state, whereas
@@ -149,46 +154,29 @@ compute plan.
 
 ### The preregistered extension
 
-My additional prediction was straightforward: written steps can store a
-completed result, but the model must still decide what step to take next. If
-step selection becomes harder, the external scratchpad may stop protecting a
-damaged internal workspace.
+I also preregistered a secondary hypothesis: if written steps mainly provide
+memory, their protection might weaken on harder problems because the model
+still has to choose each next operation. Prior work on CoT as serial
+computation motivated this idea ([Li et al.,
+2024](https://arxiv.org/abs/2402.12875); [Sprague et al.,
+2024](https://arxiv.org/abs/2409.12183); [Pfau et al.,
+2024](https://arxiv.org/abs/2404.15758)).
 
-This prediction was motivated by a broader view of written reasoning as both
-external memory and additional serial computation. Theory suggests that CoT
-can increase what a fixed-depth transformer computes by writing state back into
-its context ([Li et al., 2024](https://arxiv.org/abs/2402.12875)). Empirically,
-its benefits appear stronger for symbolic execution than for planning the next
-operation ([Sprague et al., 2024](https://arxiv.org/abs/2409.12183)), while
-content-free filler provides much less help than meaningful intermediate text
-on serial tasks ([Pfau et al., 2024](https://arxiv.org/abs/2404.15758)). These
-results suggested a boundary between storing a completed step on the page and
-choosing that step in the first place.
-
-I recorded the prediction, its opposite, and its falsifiers [before the main
-runs](https://github.com/mikotohhh/cs2881r-hw0-jspace/blob/58d0a2f1a253781c4d4d229a988b48fcb987f361/report/HYPOTHESIS.md).
-GSM8K grade-school word problems, MATH-500 competition problems grouped into
-five difficulty levels, and 30 harder AIME problems supplied the difficulty
-axis. Benchmark difficulty was only a proxy for operation-selection difficulty:
-it also changes knowledge demands, expression length, and execution burden, so
-a null trend would not isolate step selection cleanly.
+I wrote down the prediction and its rejection criteria [before the main
+runs](https://github.com/mikotohhh/cs2881r-hw0-jspace/blob/58d0a2f1a253781c4d4d229a988b48fcb987f361/report/HYPOTHESIS.md),
+then used GSM8K, five MATH-500 difficulty levels, and AIME as a rough scale.
+Benchmark difficulty also changes knowledge requirements and solution length,
+so I interpret this secondary test cautiously.
 
 ### What would count as J-space-specific protection?
 
-A crucial control asks, at each token and layer on its *own current
-trajectory*, for the norm of the J-space component that would be deleted
-there. It then subtracts a deterministic pseudorandom vector with exactly that
-norm. I call this the *matched control*. The match is local, not a promise that
-the cumulative dose will stay identical: once two conditions generate
-different tokens, their later trajectories can diverge.
-
-The project used three related but non-interchangeable control families. The
-two-hop comparisons and audited operator battery used current-trajectory
-pointwise matching; the initial main math experiment, archived dose study, and
-GSM-Symbolic study used calibrated layer schedules; the program-targeted
-arithmetic study matched the local norm of its externally specified alias
-directions. I keep those protocols separate rather than treating “matched” as
-one pooled condition.
+A crucial control uses a random direction in place of a J-space direction. At
+each token and layer, it measures how much the J-space intervention would
+remove, then subtracts a deterministic random vector of exactly that size. I
+call this the *matched control*. The match is recalculated at every position
+along each condition's own generated sequence. If two conditions begin to
+generate different tokens, the total amount removed over the full answer can
+also differ.
 
 The logic is easiest to see with a toy example. Suppose J-space deletion lowers
 direct-answer accuracy by 10 points, while the matched control lowers it by
@@ -213,23 +201,26 @@ With that standard fixed, the first experiment asked for the prerequisite to
 any protection claim: was there substantial arithmetic damage for written
 reasoning to rescue?
 
-## The first math test found almost no effect to rescue
+## I found almost no math effect for written reasoning to rescue
 
 ### Average effects on GSM8K and MATH-500
 
-The main comparison crossed two answer modes—direct answers and written chain
-of thought—with clean and J-space-deleted inference; matched and other control
-arms were run separately. On the 150 GSM8K problems shared by the four primary
-mode-by-deletion cells, deletion changed direct accuracy by −4.0 percentage
+The main experiment crossed two answer formats—direct answers and written
+reasoning—with clean and J-space-deleted inference. I ran the matched and other
+controls separately. On the 150 GSM8K problems shared by the four main
+conditions, deletion changed direct accuracy by −4.0 percentage
 points and written-answer accuracy by −3.3 points. The estimated CoT protection
 was therefore only **+0.7 points**, with a 95% interval from −7.3 to +8.7.
 
 The answer modes had very different clean baselines: **27.3% direct versus
 88.7% written** on the shared GSM8K items, and **31.0% versus 84.5%** on
-MATH-500. The causal comparisons below are therefore changes *within* each
-mode, not a comparison of their raw accuracies. The large baseline asymmetry
-also means the modes had different headroom for accuracy to fall, which limits
-how cleanly their difference identifies a mechanism.
+MATH-500. The prompt formats help explain why. In the direct condition, I
+instructed the model to give only the final answer and prefilled its response
+with `The final answer is \boxed{`. In the written condition, I asked it to
+solve the problem step by step and end with a boxed answer. I therefore compare
+the change caused by deletion *within* each format; the raw accuracies are not
+directly comparable. Even then, the formats have different room for accuracy
+to fall, which weakens the mechanism comparison.
 
 For readability, I report CoT protection as the written-answer accuracy change
 minus the direct-answer accuracy change—the negative of the preregistered
@@ -242,37 +233,40 @@ percentage points (pp), not percentages.
 | GSM8K, shared *n*=150 | −4.0 pp | −3.3 pp | +0.7 pp `[−7.3, +8.7]` |
 | MATH-500, *n*=200 | −5.0 pp | −4.5 pp | +0.5 pp `[−7.0, +8.0]` |
 
-The larger 400-item GSM8K direct arm was even closer to zero: deletion changed
-accuracy by **−0.5 points** `[−4.0, +2.8]`.
+The written-reasoning runs covered 150 GSM8K questions, while the direct-answer
+runs covered 400. The table uses the shared 150 questions so that the two
+formats are paired on identical problems. Across all 400 direct-answer
+questions, deletion was even closer to zero: accuracy changed by **−0.5
+points** `[−4.0, +2.8]`.
 
-The calibrated matched control was not benign. On the same shared 150 GSM8K
-items, it changed direct accuracy by −7.3 points and written accuracy by −3.3,
-for a descriptive protection estimate of +4.0 points—larger than the +0.7
-under J-space deletion. This did not establish J-specific arithmetic damage.
+The calibrated matched control also reduced accuracy. On the same 150 GSM8K
+questions, direct accuracy fell by 7.3 points and written accuracy by 3.3. The
+resulting protection estimate was +4.0 points, larger than the +0.7 under
+J-space deletion. I therefore had no evidence that deleting the selected
+J-space content caused distinct arithmetic damage.
 
 ### The difficulty prediction was not supported
 
 AIME could not anchor the hard end of the prediction. Direct accuracy was 0/30
 with or without deletion, so it had no room to fall. Written reasoning dropped
 from 5/30 to 3/30, while truncations increased from 13/30 to 24/30. A
-direct-versus-written comparison is not meaningful when the direct arm is
-already at zero.
+direct-versus-written comparison is not meaningful when the direct condition
+is already at zero.
 
-The fitted MATH difficulty interaction actually pointed opposite my
-prediction. It would have been tempting to announce a reversed gradient. I did
-not. The test missed the preregistered Bonferroni-adjusted threshold for two
-confirmatory tests (`p=.0265` against `.025`), and the CoT-arm accuracy changes
-across the five levels jumped from −2.5 to −12.5 to 0.0 to −7.5 to 0.0 points.
-That is not a coherent trend in either direction.
+The fitted MATH difficulty interaction pointed opposite my prediction, but it
+missed the preregistered Bonferroni-adjusted threshold for two confirmatory
+tests (`p=.0265` against `.025`). Accuracy changes with written reasoning also
+jumped from −2.5 to −12.5 to 0.0 to −7.5 to 0.0 points across the five levels.
+Those values do not form a coherent trend in either direction.
 
-### The null left three explanations open
+### Why the math result remained inconclusive
 
-The preregistered prediction was therefore not supported. But the deeper
-mechanism question remained unresolved: the experiment had not first shown
-that J-space deletion caused more arithmetic damage than a generic control.
-Matched controls were present, but were often as harmful as J-space deletion,
-and several registered control-equivalence checks failed. There was no
-confirmed J-specific injury for written reasoning to rescue.
+The preregistered prediction was unsupported. The deeper mechanism question
+remained unresolved because J-space deletion had not caused more arithmetic
+damage than a generic perturbation. The matched controls were often at least
+as harmful as J-space deletion, and several registered checks of the controls
+failed. There was no confirmed J-space-specific effect for written reasoning
+to rescue.
 
 Three broad explanations remained:
 
@@ -282,22 +276,30 @@ Three broad explanations remained:
    Qwen's arithmetic states; or
 3. the mechanism might genuinely not transfer to this model and task.
 
-I had measured almost no math effect, but still could not tell whether
-arithmetic was unaffected or merely untouched. I therefore moved to a domain
-with an obvious hidden intermediate and asked whether the intervention could
-selectively break anything at all.
+Because the intervention itself was unvalidated, the small effect did not tell
+me whether arithmetic was insensitive to the edit or whether the edit had
+missed arithmetic entirely. I therefore moved to a domain with an obvious
+hidden intermediate and asked whether the intervention could selectively
+change behavior there.
 
-## The two-hop claim narrowed under replication
+## I narrowed the two-hop claim after replication
 
-The two-hop experiments changed the scope of the claim twice. An early result
-suggested that written reasoning specifically compensated for J-space damage;
-a fresh-bank replication withdrew that mechanism claim; a later
-corrected-protocol rerun of the *original 40-item validation subset* retained
-only the narrower claim that J-space deletion selectively reduced
-direct-answer accuracy on that two-hop bank. It was an operator positive
-control, not a third independent sample.
+The two-hop experiments changed my conclusion twice. The first result suggested
+that written reasoning specifically compensated for J-space damage. A
+replication on new questions overturned that interpretation. Later, after an
+implementation audit, I reran the *original 40 validation questions* under an
+updated protocol. That rerun supported a narrower finding: J-space deletion
+selectively reduced direct-answer accuracy on this particular set. Because I
+had already used these questions during development, this was a check that the
+intervention could produce a selective effect, rather than a new replication.
 
-### The early result looked like J-specific CoT protection
+| Run | Questions | Procedure | Result |
+|---|---:|---|---|
+| Initial test | 150, including 40 used during development | Earlier protocol; direct and written answers | Suggested J-space-specific CoT protection |
+| Replication | 300 entirely new | Same earlier protocol; direct and written answers | Rejected the protection claim |
+| Audited rerun | Original 40 only | Updated protocol; direct answers only | Found selective damage on the reused set |
+
+### My first two-hop experiment suggested J-space-specific protection
 
 Two-hop questions make the hidden intermediate easy to name. To answer “the
 capital of the country containing Machu Picchu,” the model must recover *Peru*
@@ -306,25 +308,25 @@ but written answers only four, the eight-point difference is CoT protection.
 To claim that text replaced J-space in particular, that protection must also be
 larger than the protection produced by the matched generic perturbation.
 
-In the early 150-question bank, J-minus-matched protection was **+13.3 points**
+In the early 150-question set, J-minus-matched protection was **+13.3 points**
 `[+3.3, +24.0]`. It looked like the mechanism I had hoped to find: written text
 specifically substituting for damaged J-space content.
 
-Forty items came from a validation battery that had already served as
-development material. On the 110 entirely new questions alone, the point
-estimate remained positive but uncertain: **+8.2 points** `[−3.6, +20.0]`. I
-therefore treated the 150-item result as something to replicate, not something
-to explain.
+Forty items came from a validation set that had already served as development
+material. On the 110 entirely new questions alone, the point estimate remained
+positive but uncertain: **+8.2 points** `[−3.6, +20.0]`. I treated the
+150-question result as provisional and ran a fresh replication.
 
-### A fresh 300-question bank withdrew the mechanism claim
+### I withdrew the mechanism claim after testing 300 new questions
 
-I built a new bank with no entity–relation overlap with the first one, balanced
-it by question type, and froze a withdrawal rule: if the matched perturbation
-received as much protection as J-space deletion, I would drop the mechanism
-claim. Here *replication* means a new, non-overlapping bank and a decision rule
-frozen before its results—not a separate research team.
+I built a new set with no entity–relation overlap with the first one and
+balanced it by question type. Before running it, I committed to dropping the
+mechanism claim if written reasoning protected the matched random perturbation
+as much as it protected J-space deletion. Here, *replication* means a new,
+non-overlapping question set tested with a decision rule specified in advance.
+It was my own follow-up, not a replication by a separate research team.
 
-| Fresh-bank replication, new *n*=300 | Estimate | 95% CI |
+| Replication on new questions, *n*=300 | Estimate | 95% CI |
 |---|---:|---:|
 | Protection under J-space deletion | +4.3 pp | `[−3.0, +11.3]` |
 | Protection under the matched perturbation | +8.0 pp | `[+1.3, +14.3]` |
@@ -335,60 +337,56 @@ the matched-control interval excluded zero. The J-minus-matched estimate was
 −3.7 points and crossed zero, so I withdrew the preregistered specificity
 claim.
 
-*The replication did exactly what a good replication should do: it changed my
-mind.*
+Both the 150-question result and the 300-question replication used the earlier
+protocol. The replication is enough to overturn *my* intermediate claim about
+J-space-specific protection in this Qwen two-hop setup. It does not establish a
+new generic-robustness effect, and I do not combine it statistically with the
+later results. The finding also leaves the source paper's GSM8K result intact
+because the model, task, controls, and protocol differ.
 
-Both the 150-item result and the 300-item replication used the earlier
-protocol. I therefore use the fresh-bank result to withdraw the protection
-claim, not to certify a new generic-robustness effect or to pool it with the
-later audited battery. This does not directly contradict the source paper's
-GSM8K result: the model, task, controls, and protocol differ. It overturns
-*my* intermediate claim about J-specific protection in this Qwen two-hop
-setup.
+During the later code audit, I made random seeds item-specific, fixed how
+removal magnitude was tracked at each token, corrected the logic for resuming
+interrupted runs, and recorded which answers hit the token limit. I did not
+rerun the earlier 2×2 experiment. The replication invalidates the protection
+claim made under the earlier protocol, but it cannot tell us what the audited
+protocol would have done on the 300 new questions.
 
-The later audit tightened item-keyed random seeds, pointwise-dose bookkeeping,
-resume behavior, and token-cap accounting. It did not rerun the earlier 2×2
-cells under the corrected protocol. The fresh bank can therefore withdraw the
-claim defined under that earlier protocol; it cannot estimate the effect of
-the later audited operator.
-
-[![Forest plot showing the initial two-hop protection result and its failed fresh-bank replication.](replication-forest.svg)](replication-forest.svg)
+[![Forest plot showing the initial two-hop protection result and its failed replication on 300 new questions.](replication-forest.svg)](replication-forest.svg)
 
 *Figure 1. Positive J-minus-matched protection would favor the claim that text
 uniquely replaced J-space. The initial estimate was positive, but the fresh
 300-question replication reversed direction and crossed zero. Both runs used
-the earlier two-hop protocol, so I do not pool them with the later
-implementation audit.*
+the earlier two-hop protocol and are reported separately from the later
+audited results.*
 
-That replication withdrew the protection claim, but left a narrower
-positive-control question open: after correcting the intervention pipeline,
-could J-space deletion selectively disrupt a hidden fact chain at all?
+After withdrawing the protection claim, I still needed a simpler check under
+the audited protocol: could J-space deletion selectively disrupt a hidden
+fact chain at all?
 
-### A corrected-protocol rerun retained a narrower effect
+### Under the audited protocol, I retained only a narrower finding
 
-The later audit reran, in direct-answer mode, the same 40-item validation
-subset embedded in the early 150-question bank. It used layers 19–28, the
-paper-literal raw \(W_U J\) directions, and three pointwise matched controls.
-Twenty sentiment and 20 text-extraction items served as negative controls
-because they should not require the same kind of hidden fact chain. The battery
-followed an exploratory smoke test, so I describe it as a fixed formal
-positive-control follow-up rather than a blinded preregistration or an
-independent generalization test.
+I reran the same 40 validation questions in direct-answer mode under the
+audited protocol. The intervention covered layers 19–28 and followed the source
+paper's direction construction. I compared it with three random perturbations
+whose size was matched at every position along their own generated sequences.
+I also included 20 sentiment questions and 20 text-extraction questions, which
+should not require the same kind of hidden fact chain. I had first tried this setup in
+a small pilot, then fixed the procedure for the rerun. Since the 40 two-hop
+questions had already been used for development, this was a positive-control
+check rather than an independent test of generalization.
 
 One frozen item shows what the selective failure looked like:
 
 [![Clean and matched-control runs answer Mexico City, while J-space deletion answers only the intermediate country Mexico.](jspace-twohop-example.svg)](jspace-twohop-example.svg)
 
-*Figure 2. This behavior bank is the same original 40-item validation subset
-embedded in the early 150-question experiment, rerun under the corrected
-protocol. For display, I used the first frozen item by numeric ID for which
-clean and all three matched controls were correct but J-space deletion was
-wrong. This post-hoc display rule was deterministic but not preregistered. The
-edit made the model return the intermediate country instead of the requested
-capital; no item-level lens trace was saved, so the task chain is not presented
-as a measurement of the model's internal state.*
+*Figure 2. I reran the original 40-question validation set under the audited
+protocol. I chose this example after the run using a fixed rule: the
+lowest-numbered question for which the unmodified model and all three matched
+controls were correct but J-space deletion was wrong. Under deletion, the
+model returned the intermediate country instead of the requested capital. I
+did not save an item-level lens trace, so the figure shows behavior only.*
 
-Across the full battery, the result was large and selective:
+Across the complete test set, the result was large and selective:
 
 | Accuracy change on two-hop recall | Estimate | 95% CI |
 |---|---:|---:|
@@ -397,55 +395,51 @@ Across the full battery, the result was large and selective:
 
 Deletion caused 13 additional errors among 40 questions. Roughly nine remained
 after subtracting the average matched-control effect. All 20 sentiment and all
-20 extraction items stayed correct. The intervals are wide because the bank is
-small, but even their conservative ends imply double-digit losses.
+20 extraction items stayed correct. The intervals are wide because the sample
+is small, but even their conservative ends imply double-digit losses.
 
-This was not just a consequence of making a large edit to the hidden state.
-The matched controls removed *more* signal magnitude on their own trajectories,
-on average—14.83% of the residual norm versus 9.11% for J-space deletion—yet
-harmed two-hop recall much less.
+The matched perturbations show that edit size alone cannot explain the result.
+They removed *more* of the residual norm on average—14.83%, compared with 9.11%
+for J-space deletion—but caused much less damage to two-hop recall.
 
-The later audit answered the narrower question without restoring the broader
-one. It showed a selective direct-answer effect on a reused hidden-fact-chain
-bank; it did not provide new cross-item generalization, show that written
-reasoning uniquely compensated for that damage, or establish that the same
-lens reached arithmetic states.
+Based on this audit, I kept only the narrower conclusion: J-space deletion had
+a selective direct-answer effect on the reused two-hop questions. The rerun
+provided no new evidence about generalization to other questions, protection
+from written reasoning, or the lens's ability to find arithmetic states.
 
-> **Takeaway:** The claim narrowed from J-specific CoT compensation to an
-> operator-selective direct-answer effect on a fixed two-hop bank.
+> **Takeaway:** After this rerun, I retained one claim: J-space deletion
+> selectively reduced direct-answer accuracy on this fixed two-hop question
+> set.
 
-## More targeted arithmetic tests remained null
+## I still found no detectable math effect under more targeted interventions
 
-With an operator effect established on the reused two-hop bank and the
-CoT-specificity story withdrawn, I returned to arithmetic. The evidence below
-spans protocols: the dose and GSM-Symbolic studies are archived
-earlier-protocol results; the selector audit is read-only; and the final
-program-targeted study has its own frozen, hash-bound protocol. They are
-separate diagnostic constraints, not one pooled escalation series.
+I next checked four practical explanations for the arithmetic null. The
+intervention might edit too few layers; the first dataset might be too small;
+the automatic selector might miss the relevant intermediate; or supplying the
+correct intermediate directly might work better. These checks used different
+procedures, so I report their results separately.
 
-### Archived wider-band point estimates did not isolate J-specific damage
+### Editing more layers still did not isolate J-space-specific damage
 
-A dose ladder under the archived earlier protocol expanded deletion from the
-main layer band to a
-heavier L15–32 band. Two-hop damage increased, so the recipe was capable of
-becoming more disruptive. GSM8K J-space accuracy fell by 5.7 points—but its
-matched control fell by 12.2 points. The content-specific contrast therefore
-pointed in the wrong direction for a J-space mechanism. These were diagnostic
-point estimates rather than a confirmatory dose-response analysis; they did
-not motivate the claim that a wider band recovered a J-specific math effect.
+Using the earlier protocol, I expanded deletion from the main layer range to
+the wider L15–32 range. This caused more damage on the two-hop questions. On
+GSM8K, however, J-space deletion reduced accuracy by 5.7 points while the
+matched perturbation reduced it by 12.2 points. Editing more layers therefore
+still did not isolate a J-space-specific math effect. These were exploratory
+point estimates; I had not preregistered a formal test of how the effect should
+change with intervention strength.
 
-### Fresh GSM-Symbolic narrowed the operational null
+### Across 4,600 new questions, the estimated effect stayed within ±2 points
 
 I next used GSM-Symbolic, which instantiates familiar problem templates with
-new numbers. A 400-item experiment produced only 14% clean direct accuracy.
-Because performance was already near the floor, even a genuinely harmful
-intervention had little room to lower it. I treated this pilot as uninformative
-rather than as evidence for or against the mechanism.
+new numbers. A 400-question experiment produced only 14% clean direct
+accuracy. Performance was too close to the floor to reveal much additional
+damage, so this pilot told me little about the mechanism.
 
-The archived precision follow-up enumerated 5,000 items across 100 templates. Because
-the original 400 had already motivated the experiment, the primary analysis
-used only the **4,600 fresh instances**, resampling templates rather than
-pretending that number variants from one template were independent.
+The larger follow-up contained 5,000 questions from 100 templates. The first
+400 had already motivated the follow-up, so the primary analysis used only the
+**4,600 new instances**. Confidence intervals were computed by resampling
+whole templates, because variants of the same template are not independent.
 
 The clean model solved only **12.1%** of these fresh questions. That low baseline
 limits what the experiment can say about arithmetic competence. Even at that
@@ -456,17 +450,18 @@ low baseline, however, the estimated effects under this procedure were precise:
 | J-space deletion − clean | **−0.52 pp** | `[−1.65, +0.59]` |
 | J-space deletion − matched | **+0.26 pp** | `[−0.96, +1.46]` |
 
-Both intervals fell inside a prospectively amended ±2-point *absolute* margin.
-The amendment disclosed that clean generation was complete and a partial,
-unanalyzed J-space file existed, but it was frozen before the matched run and
-outcome analysis. At a 12.1% baseline, two points would still be large in
-relative terms: estimated score retention was **0.957** `[0.875, 1.057]`, whose
-interval overlaps the source paper's direct-retention interval `[0.802,
-0.930]`. The result bounds the absolute effect for this exact direct-answer
-protocol and bank; it does not establish a cross-model difference, and this
-experiment had no written-CoT arm.
+Both intervals fell inside a ±2-point *absolute* margin that I specified before
+the outcome analysis. I set that margin after the clean run had finished and a
+partial, unanalyzed J-space output file existed, but before running the matched
+control or examining outcomes. At a 12.1% baseline, two points would still be
+large in relative terms: estimated score retention was **0.957** `[0.875,
+1.057]`, whose interval overlaps the source paper's direct-retention interval
+`[0.802, 0.930]`. This result places a narrow bound on the absolute effect for
+this particular direct-answer procedure and question set. It cannot establish
+a cross-model difference, and this experiment did not include written
+reasoning.
 
-**When the token limit became part of the treatment.**
+**The 32-token limit distorted the first estimate.**
 
 At the original 32-token limit, deletion made some answers longer and therefore
 more likely to be cut off. A naive analysis gave a −1.02-point J-versus-clean
@@ -475,61 +470,54 @@ seeing the 128-token rerun outcomes, I had registered a rule: if any of the
 three paired conditions was truncated, rerun *all three* with a 128-token
 limit. The corrected estimate was −0.52 points and its interval crossed zero.
 
-The rerun prevented a small, nominal J-versus-clean effect from being mistaken
-for model damage when part of it was a measurement artifact. It was not the
-basis for the broader equivalence conclusion. The episode is a useful reminder
-that a generation limit can itself become treatment-dependent.
+The rerun showed that part of the small J-versus-clean effect was a measurement
+artifact. The broader equivalence conclusion did not depend on this correction.
+More generally, an output limit can affect experimental conditions differently
+when an intervention changes answer length.
 
-### At the final prompt token, arithmetic aliases entered the selector less often
+### The selector rarely included the correct intermediate number
 
 So far, the J-lens had chosen its own targets during intervention: at each
 processed token position and layer—through prompt prefill and subsequent
 decoding—it selected the ten strongest vocabulary-labelled directions,
 excluding the clean model's ten most likely next tokens. To audit whether a
-known intermediate was even available to that selector, I later froze a
-simpler diagnostic at just **one position: the final prompt token**. On an
-order-of-operations bank, the actual intermediate number appeared among the
+known intermediate was even available to that selector, I later fixed a
+simpler check at just **one position: the final prompt token**. On a set of
+order-of-operations questions, the actual intermediate number appeared among the
 selected directions in any layer of the band on only **10.9%** of questions at
 layers 19–28 and **20.0%** at layers 23–31—about one question in ten or one in
-five. Known intermediates in a separate upstream multihop rank-only bank
-appeared more often: 26.9% and 38.7%.
+five. Known intermediates in a separate multihop set used only for this ranking
+analysis appeared more often: 26.9% and 38.7%.
 
-This final-prompt diagnostic does not reveal whether a target surfaced at some
-other prompt or generation position. It measures one standardized opportunity
-to select the intermediate, not the selector's full opportunity during an
-entire completion. The task banks also differ, and the clean-next-token
-exclusion can remove different candidates across tasks. The comparison
-therefore describes post-exclusion coverage in these banks, not an intrinsic
-domain preference of the raw lens.
+This check examined only the final prompt token, so it could miss a target that
+appeared earlier in the prompt or during generation. The arithmetic and
+multihop question sets also differed. In addition, the procedure excluded the
+unmodified model's ten most likely next tokens, which removed different
+candidates from different questions. The coverage rates are therefore
+descriptive; they do not establish that the raw lens favors one domain.
 
 [![A layer-by-layer trace of one multihop intermediate and aggregate selector coverage for multihop and arithmetic targets.](jspace-selector-calibration.svg)](jspace-selector-calibration.svg)
 
-*Figure 3. Panel A deliberately shows an illustrative positive-hit item: the
-first clean-correct item by numeric ID whose eligible English target reached
-the post-exclusion top ten in both bands. Within layers 19–31, “Earth” entered
-at rank 9 in layer 28 and rank 5 in layer 29; these minima reproduce the
-corresponding frozen rank artifact. Panel B summarizes separate rank-only
-banks. A hit means that an eligible alias entered the selector's
-post-exclusion top ten at the final prompt position in any layer of the band.
-The comparison is descriptive: it does not show that a displayed readout
-caused any behavioral failure.*
+*Figure 3. Panel A shows a positive example selected after analysis using a
+fixed lowest-ID rule. “Earth” entered the top ten at layers 28 and 29. Panel B
+shows how often the selector included a known intermediate at the final prompt
+token: 26.9% or 38.7% on the multihop questions, compared with 10.9% or 20.0%
+on arithmetic, depending on the layer range. The two question sets differed,
+so this is a descriptive comparison.*
 
 The [underlying data for Figures 2–3](jspace-readout-data.json) include the
 exact two-hop outputs, source hashes, full selector trace, plotted counts, and
 metric definition.
 
-This made target selection the next tractable suspect, not the only remaining
-explanation. A low rank does not prove causal irrelevance. The preregistered
-diagnostic gate used 50% targetability, but that cutoff was a project heuristic,
-not a validated property of a good lens. The useful next experiment was
-therefore not a still larger selector-based benchmark. It was a task where the
-correct intermediate could be specified independently.
+Because coverage was low, I next tested whether automatic target selection was
+the problem. Other explanations remained. My preregistered plan called the
+selector adequate if it found the correct intermediate on at least 50% of
+questions. That cutoff was only a project heuristic; it was not a validated
+standard for lens quality. I therefore designed a task whose correct
+intermediate was known from the generating program and bypassed the automatic
+selector entirely.
 
-Low rank made a selector miss plausible, but a rank audit cannot show that a
-correctly chosen direction is causal. I therefore replaced automatic selection
-with programmatic knowledge of the intermediate itself.
-
-### Program-targeted deletion did not change accuracy
+### Deleting the known number directions did not establish an accuracy effect
 
 To bypass automatic selection, I generated 384 arithmetic expressions from
 small programs, represented as abstract syntax trees (ASTs). Each program
@@ -546,11 +534,12 @@ final answer: 18
 ```
 
 This test deliberately allowed a brief visible scratchpad. On a held-out
-development bank, forced-direct prompting produced only 9 correct answers out
-of 96; asking for concise arithmetic equalities produced 93 out of 96. That
-fixed the competence problem, but weakened the causal test: the model could
-write the target value down and then reuse or recompute it. An actual clean
-completion for the example above did exactly that:
+development set, a prompt requesting only the final answer produced 9 correct
+answers out of 96; asking for concise arithmetic equalities produced 93 out of
+96. This gave the model enough baseline accuracy for the experiment, but it
+weakened the causal test: the model could write the target value down and then
+reuse or recompute it. An unmodified completion for the example above did
+exactly that:
 
 ```text
 2 + 4 + (8 + (7 - 3))
@@ -560,35 +549,36 @@ completion for the example above did exactly that:
 \boxed{18}
 ```
 
-Rather than wait for the lens to select *6*, the intervention supplied every
-eligible single-token alias direction that could express it, such as `"6"`,
-`"six"`, or `" six"`, at every processed prompt and generation position
-within the chosen layer band. In the primary masked condition, an alias was
-protected whenever it appeared among the clean model's top-ten next-token
-predictions at that position; the later unmasked diagnostic removed that mask.
-The operator then deleted the residual projection onto the remaining alias
-span.
+The intervention bypassed the selector. For a known value such as *6*, it
+supplied every eligible direction labelled by a one-token spelling, including
+`"6"`, `"six"`, and `" six"`. It did this at every processed prompt and
+generation position within the chosen layer range. The primary version left a
+direction untouched whenever the unmodified model also ranked it among its ten
+most likely next tokens at that position. This reduced the risk of simply
+suppressing a token that the model was about to write. A later, more aggressive
+version removed that safeguard. In both versions, the intervention subtracted
+the projection onto the remaining number directions.
 
-This is an oracle only about the *program*: it knows that 2 + 4 equals 6. It is
-not an oracle about Qwen's mind. The model may represent that intermediate in a
-different direction—or may not store it as a stable value at all.
+The generating program tells us that 2 + 4 equals 6. It does not tell us how
+Qwen represents that fact internally. The model may use a different direction,
+or it may never store 6 as a stable value.
 
-The frozen design included:
+The design specified in advance included:
 
 - 384 expressions spanning four operations and three downstream depths;
 - two plausible layer bands, 19–28 and 23–31;
 - three matched-control seeds for each band;
-- a primary *masked* deletion that protected the model's likely next-token
-  directions, so the test would not simply suppress answer tokens; and
-- a more aggressive unmasked diagnostic, run only after the masked test failed
+- a primary *masked* deletion that left likely next-token directions untouched;
+  and
+- a more aggressive unmasked follow-up, run only after the masked test failed
   its preregistered criterion.
 
-The questions, eligible token aliases, execution checks, and decision rule were
-frozen before the formal run. Clean accuracy was **94.0%** with a 95% interval
+The questions, eligible token spellings, execution checks, and decision rule
+were fixed before the formal run. Clean accuracy was **94.0%** with a 95% interval
 of `[91.7, 96.1]`, so unlike GSM-Symbolic, this task gave the intervention
 ample accuracy to reduce. Negative values in the next table would mean that
-target deletion harmed accuracy. But every oracle-versus-clean and
-oracle-versus-matched estimate was near zero:
+target deletion harmed accuracy. Every comparison with the unmodified model
+and matched perturbations was near zero:
 
 | Family | Band | Targeted deletion − clean | Targeted deletion − matched mean |
 |---|---|---:|---:|
@@ -598,8 +588,8 @@ oracle-versus-matched estimate was near zero:
 | Unmasked | L23–31 | 0.0 pp `[−1.6, +1.6]` | +0.2 pp `[−1.3, +1.6]` |
 
 These intervals strongly exclude the preregistered 10-point damage required by
-the arithmetic positive-control criterion. Bypassing automatic selection
-therefore weakens the simple story that selection was the *only* problem.
+the arithmetic positive-control criterion. Automatic target selection was
+therefore not enough to explain the earlier null result.
 
 More fundamentally, specifying the correct AST node does not demonstrate that
 Qwen encoded its value in the deleted token-labelled directions. The source
@@ -618,56 +608,58 @@ suggest. It cannot tell apart:
 4. the chosen layer bands miss the causal state; or
 5. the visible scratchpad routes around an otherwise internal dependency.
 
-The correct conclusion is not “Qwen math does not use J-space.” It is that this
-particular way of deleting token-labelled numeric directions did not establish
-an arithmetic causal effect.
+These data support a limited conclusion: deleting these token-labelled number
+directions did not produce a detectable arithmetic effect. They do not
+establish how Qwen represents arithmetic.
 
-> **Takeaway:** Heavier doses, fresh problems, a 4,600-item precision study,
-> and program-defined targets all left the arithmetic effect near zero under
-> the tested procedures. None established that the lens had reached the
-> arithmetic state Qwen was using, and the final visible-scratchpad test did
-> not provide an arithmetic causal positive control.
+> **Takeaway:** Across wider layer ranges, 4,600 new problems, and
+> program-specified targets, estimated arithmetic effects stayed near zero.
+> None of these experiments verified that the lens had reached the arithmetic
+> state Qwen was using. The final test also let the model write a short
+> scratchpad, which could allow it to recompute the deleted value.
 
 [![Design schematic of the program-targeted arithmetic experiment and four targeted-minus-clean estimates near zero.](wp17-oracle.svg)](wp17-oracle.svg)
 
 *Figure 4. The program supplied the correct value 6, but deleting directions
-labelled with 6 changed accuracy by approximately zero. This bypassed target
-selection; it did not prove that those directions were Qwen's internal
-representation of 6. The task also allowed a compact visible scratchpad.*
+labelled with 6 changed accuracy by approximately zero. Supplying the value
+bypassed automatic selection, but did not show that Qwen represented 6 along
+those directions. The task also allowed a compact visible scratchpad.*
 
 ## What the evidence supports
 
 | Status | What I can say | What I cannot say |
 |---|---|---|
-| **Supported** | On a reused 40-item validation bank, the audited intervention caused a larger two-hop accuracy drop than its pointwise matched controls while preserving sentiment and extraction | That the deleted directions encoded the task's exact intermediate fact, that this is an independent cross-item replication, or that it validates arithmetic targets |
+| **Supported** | On a reused 40-question validation set, the audited intervention caused a larger two-hop accuracy drop than three random perturbations matched locally in size, while preserving sentiment and extraction | That the deleted directions encoded the task's exact intermediate fact, that this is an independent replication on new questions, or that it validates arithmetic targets |
 | **Not reproduced** | The math experiments did not show Anthropic's direct-versus-written protection pattern | Qwen's arithmetic is independent of an internal workspace |
-| **Withdrawn** | The early two-hop evidence for uniquely J-specific CoT protection failed a fresh-bank replication | The data prove all CoT robustness was generic |
+| **Withdrawn** | The early two-hop evidence for uniquely J-specific CoT protection failed a replication with 300 new questions | The data prove all CoT robustness was generic |
 | **Unresolved** | Bypassing automatic selection did not recover an arithmetic effect | Whether the third-party lens reached Qwen's actual arithmetic representation |
 
-This is not a refutation of the source paper. The model, fitted lens, tasks, and
-targeted intervention all changed. The clean conclusion is about transfer:
-Claude's direct-versus-written math pattern was not reproduced with this Qwen
-checkpoint, third-party WikiText lens, and deletion intervention. My experiments
-never established whether the lens reached Qwen's arithmetic states.
+The model, fitted lens, tasks, and targeted intervention all differed from the
+source paper, so these results do not refute Anthropic's findings. They answer
+a narrower transfer question: I did not reproduce Claude's
+direct-versus-written math pattern with this Qwen checkpoint, third-party
+WikiText lens, and deletion intervention. I also never established whether the
+lens reached Qwen's arithmetic states.
 
-Only the initial GSM8K and MATH-500 experiment tested the direct-versus-written
-pattern itself. The larger GSM-Symbolic and program-targeted studies were
-instrument-validity tests, not additional CoT replications.
+Only the initial GSM8K and MATH-500 experiment tested the
+direct-versus-written pattern itself. The larger GSM-Symbolic and
+program-targeted studies instead asked whether the lens and intervention worked
+as intended. They were not additional CoT replications.
 
 [![Forest plot contrasting the large two-hop effect with math effects centered near zero.](effect-forest.svg)](effect-forest.svg)
 
 *Figure 5. Negative values mean that the intervention reduced accuracy. The
-corrected-protocol two-hop row uses the reused 40-item validation bank; the
-GSM-Symbolic row is an archived earlier-protocol result; and the oracle rows
-come from a separate frozen protocol. Because the rows come from different
-protocols, this is an evidence map rather than a pooled analysis.*
+two-hop row uses the reused 40-question validation set under the audited
+protocol. The GSM-Symbolic row comes from the earlier protocol, and the
+program-specified rows come from a separate experiment. The rows are shown
+together for orientation but are not statistically combined.*
 
-## Validate the instrument before scaling
+## First show that the lens finds the arithmetic state
 
-The next experiment should improve **validity**, not merely precision. Another
-large GSM-Symbolic sweep with the same lens and deletion rule would estimate
-the same comparison more precisely while leaving the central
-ambiguity intact.
+The next experiment should test whether the lens actually reaches the relevant
+arithmetic state. Repeating GSM-Symbolic at still larger scale with the same
+lens and deletion rule would tighten an estimate we already have while leaving
+the central ambiguity intact.
 
 ### A more diagnostic sequence
 
@@ -677,95 +669,74 @@ My next sequence would be:
    implementation and a generic pretraining-like corpus, training it to predict
    the model's penultimate-layer state as in the paper's main setup. The current
    WikiText lens, trained against the final layer, would remain a baseline. A
-   math-corpus lens would be a preregistered secondary diagnostic, never
-   selected because it happened to produce the desired downstream effect.
-2. **Verify clean-trajectory alignment before intervening.** On held-out
-   arithmetic items, check that a value such as *6* becomes active when the
-   model computes 2 + 4—not merely because an external program says the answer
-   should be 6.
+   math-corpus lens would be a secondary analysis specified in advance and
+   reported regardless of its downstream result.
+2. **Check that the lens finds the intermediate during an unmodified run.** On
+   held-out arithmetic questions, verify that a value such as *6* becomes
+   active when the model computes 2 + 4. The generating program alone cannot
+   establish this alignment.
 3. **Use a counterfactual causal intervention.** Patch a contextual state or
    swap the proposed state from 6 to 7. In the example above, the strongest
    evidence would be a directional change from 18 to 19. Deletion only tests
    necessity and permits recomputation; a swap tests represented content.
 4. **Only then scale the question.** Once an arithmetic causal positive control
    exists for a given lens, compare direct and written-CoT modes across models
-   and difficulty. A larger model should answer a scaling question, not serve
-   as another search for significance.
+   and difficulty. I would move to larger models when the experiment is
+   explicitly designed to answer a scaling question.
 
-### Reproducibility is part of the causal claim
+### Implementation details that affect the result
 
-Interventions during autoregressive generation are unusually easy to define
-accidentally by implementation details. Padding, batch order, early stopping,
-and resume behavior can change which control is applied or how much signal is
-removed. I therefore treated execution provenance as part of the intervention,
-not as housekeeping.
+Padding, batch order, early stopping, and resuming interrupted jobs can all
+change an intervention during autoregressive generation. In the final pipeline,
+I tied each random sequence to the question, layer, and absolute token position;
+froze the tokenized prompts; preserved completed outputs; and recorded the code,
+configuration, and seeds used for each run.
 
-The final pipeline keys every random-control stream to the item and layer, then
-consumes it by absolute logical token position across prompt and generation.
-Changing the batch therefore does not silently change the treatment. It
-freezes tokenized prompts and refuses to overwrite completed runs. Analyses use
-paired, stratified resampling, and the program-targeted experiment's decision
-rule was fixed before its formal output. The truncation rerun above is one
-example of why these details affected the scientific conclusion rather than
-just code quality.
+The matched controls were constructed differently across phases. Earlier math
+experiments used fixed per-layer calibration, while the two-hop and
+program-targeted experiments recalculated the matching magnitude along each
+generated sequence. I analyze these results separately, and I only claim that
+earlier batched fp16 runs reproduced the same answers, not identical
+floating-point values. The [full implementation
+audit](https://github.com/mikotohhh/cs2881r-hw0-jspace/blob/58d0a2f1a253781c4d4d229a988b48fcb987f361/report/PROTOCOL_V3_AUDIT.md)
+records these limits in detail.
 
-Not every generation from the earlier protocol is reproducible bit-for-bit
-from the current checkout. Batched fp16 execution was checked for behavioral
-agreement, not byte identity. In the pointwise-control families, controls match
-intervention size at each point on their *own* trajectories; once outputs
-diverge, total accumulated dose need not remain exactly equal. The archived
-calibrated controls obey a different schedule. These are limits on the causal
-comparison, not footnotes to it.
+### Conclusion
 
-### A bounded conclusion
+The project produced one selective effect: J-space deletion damaged two-hop
+recall on a reused validation set more than matched random perturbations. It
+also produced several arithmetic estimates close to zero. Their interpretation
+remains limited because I never verified that this lens found the arithmetic
+state Qwen actually used. Finally, the 300-question replication overturned my
+early claim that written reasoning specifically compensated for J-space
+damage.
 
-The tempting version of this project was a clean counterclaim: *the J-space
-result does not replicate in Qwen, so mathematics must use a different
-mechanism*. The evidence does not support that sentence.
-
-What it supports is more useful. With the later audited deletion intervention,
-unstated fact chains were selectively disrupted on the reused validation bank.
-Separately, arithmetic estimates from heterogeneous archived and frozen
-protocols remained near zero. A fresh replication also removed the basis for
-claiming that written reasoning uniquely protected performance from J-space
-deletion. For interpreting the arithmetic null, the next bottleneck is
-measurement validity and cross-model tool transfer—not another larger
-benchmark under the same protocol.
-
-Research judgment is often most visible in what one stops claiming. Here, the
-most informative outcomes were not only the effects that survived, but the
-experiments that forced me to withdraw a mechanism story, distinguish a precise
-null under one procedure from a theoretical refutation, and redirect the next
-unit of compute toward the weakest link in the causal chain.
-
-Before asking whether written reasoning substitutes for an internal
-representation, first show that the intervention reaches that representation.
+The next step is therefore clear. I would first fit and validate a Qwen-specific
+lens on a localized arithmetic computation, then test whether changing the
+proposed intermediate causes the predicted change in the answer. Only after
+that validation would I return to the comparison between direct answers and
+written reasoning.
 
 ---
 
 **Project artifacts.**
 
 This project began as Harvard CS2881R HW0. The repository is currently private,
-so the links below are retained for provenance but may require access; a concise
-public artifact bundle is the next release step.
+so the links below may require access. I plan to release a compact public bundle
+of code and data.
 
 - [Repository and reproduction instructions](https://github.com/mikotohhh/cs2881r-hw0-jspace)
 - [Concise course report](https://github.com/mikotohhh/cs2881r-hw0-jspace/blob/58d0a2f1a253781c4d4d229a988b48fcb987f361/report/REPORT.md)
 - [Original preregistration and amendments](https://github.com/mikotohhh/cs2881r-hw0-jspace/blob/58d0a2f1a253781c4d4d229a988b48fcb987f361/report/HYPOTHESIS.md)
-- [Operator protocol audit](https://github.com/mikotohhh/cs2881r-hw0-jspace/blob/58d0a2f1a253781c4d4d229a988b48fcb987f361/report/PROTOCOL_V3_AUDIT.md)
-- [Fresh-bank two-hop replication](https://github.com/mikotohhh/cs2881r-hw0-jspace/blob/58d0a2f1a253781c4d4d229a988b48fcb987f361/results/r1/analysis.md)
+- [Intervention implementation audit](https://github.com/mikotohhh/cs2881r-hw0-jspace/blob/58d0a2f1a253781c4d4d229a988b48fcb987f361/report/PROTOCOL_V3_AUDIT.md)
+- [Two-hop replication on 300 new questions](https://github.com/mikotohhh/cs2881r-hw0-jspace/blob/58d0a2f1a253781c4d4d229a988b48fcb987f361/results/r1/analysis.md)
 - [Fresh 4,600-item GSM-Symbolic analysis](https://github.com/mikotohhh/cs2881r-hw0-jspace/blob/58d0a2f1a253781c4d4d229a988b48fcb987f361/results/p9/analysis_a1.md)
-- [Oracle arithmetic experiment: protocol, results, and released data](https://github.com/mikotohhh/cs2881r-hw0-jspace/blob/58d0a2f1a253781c4d4d229a988b48fcb987f361/report/WP17_DATA.md)
+- [Program-specified arithmetic experiment: protocol, results, and released data](https://github.com/mikotohhh/cs2881r-hw0-jspace/blob/58d0a2f1a253781c4d4d229a988b48fcb987f361/report/WP17_DATA.md)
 
 **Role and acknowledgments.**
 
-I was the project owner and scientific decision-maker. I framed the hypotheses,
-chose the outcome definitions and controls, made the go/no-go and withdrawal
-decisions,
-implemented and audited the intervention and evaluation pipeline, ran or
-supervised the experiments, reviewed the released artifacts, and take
-responsibility for the claims in this account. I used AI systems as coding,
-review, and drafting assistants; their outputs were checked against frozen
-scripts and released artifacts, and are not represented as independent peer
-review. The source J-lens implementation, third-party fitted weights, and public
-datasets are credited in the repository.
+I designed the hypotheses and controls, implemented and audited the code, and
+ran or supervised the experiments. I used AI systems for coding, review, and
+drafting assistance, and checked their outputs against the prespecified
+analysis scripts and saved results. The source J-lens implementation,
+third-party fitted weights, and public datasets are credited in the repository.

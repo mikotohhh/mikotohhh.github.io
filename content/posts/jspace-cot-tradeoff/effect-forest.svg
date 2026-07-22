@@ -154,7 +154,7 @@ L 684.355579 21.637969
      </g>
     </g>
     <g id="text_8">
-     <text style="font: 10px 'DejaVu Sans'; text-anchor: middle" x="474.62575" y="422.874531" transform="rotate(-0 474.62575 422.874531)">Accuracy change (percentage points; treatment − reference)   ← damage</text>
+     <text style="font: 10px 'DejaVu Sans'; text-anchor: middle" x="474.62575" y="422.874531" transform="rotate(-0 474.62575 422.874531)">Accuracy change (percentage points; intervention − comparison)   ← damage</text>
     </g>
    </g>
    <g id="matplotlib.axis_2">
@@ -509,7 +509,7 @@ z
     <text style="fill: #e69f00; font: 700 9.5px 'DejaVu Sans'; text-anchor: start" x="202.75375" y="267.078557" transform="rotate(-0 202.75375 267.078557)">High-precision and program-targeted follow-ups</text>
    </g>
    <g id="text_32">
-    <text style="fill: #6b7280; font: 9px 'DejaVu Sans'; text-anchor: start" x="202.75375" y="461.110163" transform="rotate(-0 202.75375 461.110163)">95% paired intervals. Protocols differ; estimates are shown as an evidence map and are not pooled.</text>
+    <text style="fill: #6b7280; font: 9px 'DejaVu Sans'; text-anchor: start" x="202.75375" y="461.110163" transform="rotate(-0 202.75375 461.110163)">95% paired intervals. Rows come from different procedures and are shown separately.</text>
    </g>
    <g id="text_33">
     <text style="font: 700 13px 'DejaVu Sans'; text-anchor: start" x="202.75375" y="15.637969" transform="rotate(-0 202.75375 15.637969)">The audited deletion has a large two-hop effect; tested math effects cluster near zero</text>

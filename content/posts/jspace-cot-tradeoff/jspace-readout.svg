@@ -114,7 +114,7 @@ z
     <text style="fill: #262626; font: 700 13.3px 'DejaVu Sans'; text-anchor: start" x="59.48507" y="61.649408" transform="rotate(-0 59.48507 61.649408)">A two-hop answer fails under J-space deletion</text>
    </g>
    <g id="text_3">
-    <text style="fill: #667085; font: 700 9.4px 'DejaVu Sans'; text-anchor: start" x="36.630938" y="83.560962" transform="rotate(-0 36.630938 83.560962)">FORMAL BEHAVIOR BANK  ·  40 TWO-HOP QUESTIONS</text>
+    <text style="fill: #667085; font: 700 9.4px 'DejaVu Sans'; text-anchor: start" x="36.630938" y="83.560962" transform="rotate(-0 36.630938 83.560962)">AUDITED INTERVENTION TEST  ·  40 TWO-HOP QUESTIONS</text>
    </g>
    <g id="text_4">
     <text style="fill: #667085; font: 700 9.2px 'DejaVu Sans'; text-anchor: start" x="36.630938" y="105.814665" transform="rotate(-0 36.630938 105.814665)">PROMPT</text>
@@ -222,7 +222,7 @@ z
     <text style="fill: #262626; font: 700 13.3px 'DejaVu Sans'; text-anchor: start" x="59.48507" y="256.03024" transform="rotate(-0 59.48507 256.03024)">What the intervention’s selector sees</text>
    </g>
    <g id="text_25">
-    <text style="fill: #667085; font: 700 9.4px 'DejaVu Sans'; text-anchor: start" x="36.630938" y="278.249564" transform="rotate(-0 36.630938 278.249564)">POST-EXCLUSION SELECTOR RANKS (LOWER = STRONGER)  ·  SEPARATE BANK</text>
+    <text style="fill: #667085; font: 700 9.4px 'DejaVu Sans'; text-anchor: start" x="36.630938" y="278.249564" transform="rotate(-0 36.630938 278.249564)">SELECTOR RANKS AFTER EXCLUSION (LOWER = STRONGER)  ·  SEPARATE QUESTION SET</text>
    </g>
    <g id="text_26">
     <text style="fill: #667085; font: 9.3px 'DejaVu Sans'; text-anchor: start" x="36.630938" y="439.239995" transform="rotate(-0 36.630938 439.239995)">Task: third planet from Sun → Earth → 1 moon     L29 top 5: moons · asteroids · 地球 · planets · Earth</text>
@@ -805,10 +805,10 @@ z
    <text style="fill: #262626; font: 700 17px 'DejaVu Sans'; text-anchor: start" x="36.630938" y="18.677344" transform="rotate(-0 36.630938 18.677344)">A selective fact-chain failure—and a possible math measurement bottleneck</text>
   </g>
   <g id="text_66">
-   <text style="fill: #667085; font: 11.2px 'DejaVu Sans'; text-anchor: start" x="36.630938" y="42.50865" transform="rotate(-0 36.630938 42.50865)">Behavior and rank panels use separate frozen banks; they are complementary evidence, not item-level mediation.</text>
+   <text style="fill: #667085; font: 11.2px 'DejaVu Sans'; text-anchor: start" x="36.630938" y="42.50865" transform="rotate(-0 36.630938 42.50865)">The behavior and ranking panels use separate question sets and cannot establish item-level mediation.</text>
   </g>
   <g id="text_67">
-   <text style="fill: #667085; font: 9.2px 'DejaVu Sans'; text-anchor: start" x="36.630938" y="698.358687" transform="rotate(-0 36.630938 698.358687)">Descriptive coverage audit. Hit = an eligible alias reached the post-exclusion top 10 at the final prompt position, in any band layer; all items stay in the denominator.</text>
+   <text style="fill: #667085; font: 9.2px 'DejaVu Sans'; text-anchor: start" x="36.630938" y="698.358687" transform="rotate(-0 36.630938 698.358687)">Descriptive ranking check. Hit = an eligible name reached the top 10 after likely next tokens were excluded, at the final prompt position in any layer.</text>
   </g>
  </g>
  <defs>
