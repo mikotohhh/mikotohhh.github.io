@@ -105,11 +105,13 @@ details.toc .inner > ul > li > ul > li > a::before {
  * normal measure while the contents sit in the otherwise unused left margin.
  * The contents scroll with the document rather than floating over the text.
  */
-@media screen and (min-width: 1360px) {
+@media screen and (min-width: 1180px) {
     details.toc {
+        --toc-width: clamp(190px, calc((100vw - 720px) / 2 - 48px), 270px);
+
         float: left;
-        width: 270px;
-        margin: 0 0 0 -310px;
+        width: var(--toc-width);
+        margin: 0 0 0 calc(-1 * (var(--toc-width) + 32px));
         overflow: visible;
         border: 0;
         border-right: 1px solid var(--border);
